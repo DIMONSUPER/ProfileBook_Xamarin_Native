@@ -1,6 +1,7 @@
 ﻿using MvvmCross.IoC;
 using MvvmCross.ViewModels;
 using ProfileBook_Native.Core.ViewModels.Main;
+using ProfileBook_Native.Core.ViewModels.SignIn;
 
 namespace ProfileBook_Native.Core
 {
@@ -13,7 +14,7 @@ namespace ProfileBook_Native.Core
                 .AsInterfaces()
                 .RegisterAsLazySingleton();
 
-            RegisterAppStart<MainViewModel>();
+            RegisterAppStart<SignInViewModel>();
         }
     }
 }

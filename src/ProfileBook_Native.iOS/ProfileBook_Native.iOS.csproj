@@ -25,7 +25,7 @@
     <MtouchDebug>true</MtouchDebug>
     <MtouchExtraArgs>--linkskip=ProfileBook_Native.Core</MtouchExtraArgs>
     <MtouchSdkVersion>13.6</MtouchSdkVersion>
-    <LangVersion>8.0</LangVersion>
+    <LangVersion>9.0</LangVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|iPhoneSimulator' ">
     <DebugType>none</DebugType>
@@ -37,7 +37,7 @@
     <MtouchArch>x86_64</MtouchArch>
     <ConsolePause>false</ConsolePause>
     <MtouchExtraArgs>--linkskip=ProfileBook_Native.Core</MtouchExtraArgs>
-    <LangVersion>8.0</LangVersion>
+    <LangVersion>9.0</LangVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|iPhone' ">
     <DebugSymbols>true</DebugSymbols>
@@ -54,7 +54,7 @@
     <MtouchDebug>true</MtouchDebug>
     <MtouchLink>SdkOnly</MtouchLink>
     <MtouchExtraArgs>--linkskip=ProfileBook_Native.Core</MtouchExtraArgs>
-    <LangVersion>8.0</LangVersion>
+    <LangVersion>9.0</LangVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|iPhone' ">
     <DebugType>none</DebugType>
@@ -68,7 +68,7 @@
     <CodesignKey>iPhone Distribution</CodesignKey>
     <MtouchExtraArgs>--linkskip=ProfileBook_Native.Core</MtouchExtraArgs>
     <MtouchLink>SdkOnly</MtouchLink>
-    <LangVersion>8.0</LangVersion>
+    <LangVersion>9.0</LangVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(RunConfiguration)' == 'Default' ">
     <AppExtensionDebugBundleId />
@@ -129,7 +129,6 @@
     <ITunesArtwork Include="iTunesArtwork" />
     <ITunesArtwork Include="iTunesArtwork%402x" />
     <Compile Include="Views\BaseViewController.cs" />
-    <Compile Include="Views\Main\MainViewController.cs" />
     <InterfaceDefinition Include="LaunchScreen.storyboard">
       <SubType>Designer</SubType>
     </InterfaceDefinition>
@@ -139,6 +138,19 @@
     <ImageAsset Include="Resources\Media.xcassets\LaunchImages.launchimage\Contents.json">
       <Visible>false</Visible>
     </ImageAsset>
+    <BundleResource Include="Resources\Base.lproj\Localizable.strings" />
+    <BundleResource Include="Resources\ru.lproj\Localizable.strings" />
+    <BundleResource Include="Resources\uk.lproj\Localizable.strings" />
+    <InterfaceDefinition Include="Views\SignIn\SignInView.xib" />
+    <Compile Include="Views\SignIn\SignInView.cs" />
+    <Compile Include="Views\SignIn\SignInView.designer.cs">
+      <DependentUpon>SignInView.cs</DependentUpon>
+    </Compile>
+    <InterfaceDefinition Include="Views\SignUp\SignUpView.xib" />
+    <Compile Include="Views\SignUp\SignUpView.cs" />
+    <Compile Include="Views\SignUp\SignUpView.designer.cs">
+      <DependentUpon>SignUpView.cs</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -215,6 +227,16 @@
     <ImageAsset Include="Resources\Media.xcassets\LaunchImages.launchimage\Contents.json">
       <Visible>false</Visible>
     </ImageAsset>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Views\SignIn\" />
+    <Folder Include="Resources\Base.lproj\" />
+    <Folder Include="Resources\uk.lproj\" />
+    <Folder Include="Resources\ru.lproj\" />
+    <Folder Include="Views\SignUp\" />
+    <Folder Include="Views\MainList\" />
+    <Folder Include="Views\AddEditProfile\" />
+    <Folder Include="Views\Settings\" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

@@ -5,7 +5,7 @@ namespace ProfileBook_Native.iOS.Styles
 {
     public static class ColorPalette
     {
-        public static UIColor Primary => FromHexString("#24b780");
+        public static UIColor Primary => FromHexString("#2B98F0");
         public static UIColor PrimaryDark => FromHexString("#008653");
         public static UIColor PrimaryLight => FromHexString("#64eab0");
 

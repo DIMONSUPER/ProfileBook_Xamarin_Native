@@ -20,6 +20,10 @@ namespace ProfileBook_Native.iOS.Views
             NavigationController.NavigationBar.Hidden = false;
             NavigationController.NavigationBar.BarTintColor = ColorPalette.Primary;
             NavigationController.NavigationBar.TintColor = UIColor.White;
+            NavigationController.NavigationBar.TitleTextAttributes = new UIStringAttributes
+            {
+                ForegroundColor = UIColor.White,
+            };
 
             NavigationController.SetNeedsStatusBarAppearanceUpdate();
 
