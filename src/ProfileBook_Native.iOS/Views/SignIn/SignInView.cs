@@ -27,8 +27,6 @@ namespace ProfileBook_Native.iOS.Views.SignIn
             this.CreateBinding(LoginTextField).To<SignInViewModel>(vm => vm.Login).Apply();
             this.CreateBinding(PasswordTextField).To<SignInViewModel>(vm => vm.Password).Apply();
             this.CreateBinding(SignInButton).To<SignInViewModel>(vm => vm.SignInCommand).Apply();
-            this.CreateBinding(SignInButton).To<SignInViewModel>(vm => vm.IsSignInButtonEnabled)
-                .For(nameof(SignInButton.Enabled)).Apply();
             this.CreateBinding(SignUpButton).To<SignInViewModel>(vm => vm.SignUpCommand).Apply();
         }
 

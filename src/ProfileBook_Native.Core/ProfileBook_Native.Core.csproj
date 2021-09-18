@@ -14,18 +14,32 @@
   <ItemGroup>
     <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="5.0.0" />
     <PackageReference Include="MvvmCross" Version="8.0.2" />
+    <PackageReference Include="sqlite-net-pcl" Version="1.8.116" />
+    <PackageReference Include="Acr.UserDialogs" Version="7.1.0.514" />
   </ItemGroup>
   <ItemGroup>
     <None Remove="ViewModels\SignInViewModel\" />
     <None Remove="Resources\" />
     <None Remove="Resources\Strings\" />
     <None Remove="ViewModels\SignUp\" />
+    <None Remove="sqlite-net-pcl" />
+    <None Remove="Services\" />
+    <None Remove="Services\Repository\" />
+    <None Remove="Models\" />
+    <None Remove="Services\User\" />
+    <None Remove="Services\Profile\" />
+    <None Remove="Acr.UserDialogs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="ViewModels\SignIn\" />
     <Folder Include="Resources\" />
     <Folder Include="Resources\Strings\" />
     <Folder Include="ViewModels\SignUp\" />
+    <Folder Include="Services\" />
+    <Folder Include="Services\Repository\" />
+    <Folder Include="Models\" />
+    <Folder Include="Services\User\" />
+    <Folder Include="Services\Profile\" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Update="Resources\Strings\Strings.resx">
