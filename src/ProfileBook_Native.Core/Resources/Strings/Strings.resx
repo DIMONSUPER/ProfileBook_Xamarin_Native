@@ -34,7 +34,7 @@
         <value>Confirm password</value>
   </data>
 	<data name="LoginWarning1" xml:space="preserve">
-        <value>Login must contain more than 3 and less than 17 symbols</value>
+        <value>Login must contain at least 4 and no more than 16 symbols</value>
   </data>
 	<data name="LoginWarning2" xml:space="preserve">
         <value>Login already exists</value>
@@ -43,10 +43,10 @@
         <value>Login mustn't start with digit</value>
   </data>
 	<data name="PasswordWarning1" xml:space="preserve">
-        <value>Password must contain more than 7 and less than 17 symbols</value>
+        <value>Password must contain more at least 8 and no more than 16 symbols</value>
   </data>
 	<data name="PasswordWarning2" xml:space="preserve">
-        <value>Password must contain at least one Upper letter</value>
+        <value>Password must contain at least one upper letter, small letter and digit</value>
   </data>
 	<data name="ConfirmPasswordWarning" xml:space="preserve">
         <value>Passwords must be equal</value>
@@ -104,5 +104,11 @@
   </data>
 	<data name="ChooseLanguage" xml:space="preserve">
         <value>Choose language</value>
+  </data>
+  <data name="RememberMe" xml:space="preserve">
+        <value>Remember me</value>
+  </data>
+  <data name="InvalidLoginOrPassword" xml:space="preserve">
+        <value>Invalid login or password!</value>
   </data>
 </root>

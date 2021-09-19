@@ -16,6 +16,9 @@
     <PackageReference Include="MvvmCross" Version="8.0.2" />
     <PackageReference Include="sqlite-net-pcl" Version="1.8.116" />
     <PackageReference Include="Acr.UserDialogs" Version="7.1.0.514" />
+    <PackageReference Include="SQLiteNetExtensions.Async" Version="2.1.0" />
+    <PackageReference Include="Xam.Plugins.Settings" Version="3.1.1" />
+    <PackageReference Include="AutoMapper" Version="10.1.1" />
   </ItemGroup>
   <ItemGroup>
     <None Remove="ViewModels\SignInViewModel\" />
@@ -29,6 +32,14 @@
     <None Remove="Services\User\" />
     <None Remove="Services\Profile\" />
     <None Remove="Acr.UserDialogs" />
+    <None Remove="SQLiteNetExtensions.Async" />
+    <None Remove="Xam.Plugins.Settings" />
+    <None Remove="Services\Settings\" />
+    <None Remove="ViewModels\MainList\" />
+    <None Remove="ViewModels\AddEditProfile\" />
+    <None Remove="ViewModels\Settings\" />
+    <None Remove="Services\MapperService\" />
+    <None Remove="AutoMapper" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="ViewModels\SignIn\" />
@@ -40,6 +51,11 @@
     <Folder Include="Models\" />
     <Folder Include="Services\User\" />
     <Folder Include="Services\Profile\" />
+    <Folder Include="Services\Settings\" />
+    <Folder Include="ViewModels\MainList\" />
+    <Folder Include="ViewModels\AddEditProfile\" />
+    <Folder Include="ViewModels\Settings\" />
+    <Folder Include="Services\MapperService\" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Update="Resources\Strings\Strings.resx">

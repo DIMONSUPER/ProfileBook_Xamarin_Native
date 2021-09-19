@@ -27,7 +27,7 @@ namespace ProfileBook_Native.iOS.Views.SignUp
             this.CreateBinding(LoginTextField).To<SignUpViewModel>(vm => vm.Login).Apply();
             this.CreateBinding(PasswordTextField).To<SignUpViewModel>(vm => vm.Password).Apply();
             this.CreateBinding(ConfirmPasswordTextField).To<SignUpViewModel>(vm => vm.ConfirmPassword).Apply();
-            this.CreateBinding(SignUpButton).To<SignUpViewModel>(vm => vm.SignUpCommand).Apply();
+            this.CreateBinding(SignUpButton).To<SignUpViewModel>(vm => vm.SignUpButtonTappedCommand).Apply();
         }
 
         private void SetLocalizableStrings()

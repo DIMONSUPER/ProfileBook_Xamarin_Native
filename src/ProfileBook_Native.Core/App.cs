@@ -2,7 +2,9 @@
 using MvvmCross;
 using MvvmCross.IoC;
 using MvvmCross.ViewModels;
-using ProfileBook_Native.Core.Services.User;
+using Plugin.Settings;
+using ProfileBook_Native.Core.Services.Settings;
+using ProfileBook_Native.Core.ViewModels.MainList;
 using ProfileBook_Native.Core.ViewModels.SignIn;
 
 namespace ProfileBook_Native.Core
@@ -17,8 +19,19 @@ namespace ProfileBook_Native.Core
                 .RegisterAsLazySingleton();
 
             Mvx.IoCProvider.RegisterSingleton(UserDialogs.Instance);
+            Mvx.IoCProvider.RegisterSingleton(CrossSettings.Current);
 
-            RegisterAppStart<SignInViewModel>();
+            if (Mvx.IoCProvider.TryResolve(out ISettingsService settingsService))
+            {
+                if (settingsService.IsAuthCompleted)
+                {
+                    RegisterAppStart<MainListViewModel>();
+                }
+                else
+                {
+                    RegisterAppStart<SignInViewModel>();
+                }
+            }
         }
     }
 }

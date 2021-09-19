@@ -19,6 +19,12 @@ namespace ProfileBook_Native.iOS.Views.SignIn
 		UIKit.UITextField PasswordTextField { get; set; }
 
 		[Outlet]
+		UIKit.UILabel RememberMeLabel { get; set; }
+
+		[Outlet]
+		UIKit.UISwitch RememberMeSwitch { get; set; }
+
+		[Outlet]
 		UIKit.UIButton SignInButton { get; set; }
 
 		[Outlet]
@@ -26,14 +32,24 @@ namespace ProfileBook_Native.iOS.Views.SignIn
 		
 		void ReleaseDesignerOutlets ()
 		{
-			if (PasswordTextField != null) {
-				PasswordTextField.Dispose ();
-				PasswordTextField = null;
+			if (RememberMeLabel != null) {
+				RememberMeLabel.Dispose ();
+				RememberMeLabel = null;
+			}
+
+			if (RememberMeSwitch != null) {
+				RememberMeSwitch.Dispose ();
+				RememberMeSwitch = null;
 			}
 
 			if (LoginTextField != null) {
 				LoginTextField.Dispose ();
 				LoginTextField = null;
+			}
+
+			if (PasswordTextField != null) {
+				PasswordTextField.Dispose ();
+				PasswordTextField = null;
 			}
 
 			if (SignInButton != null) {

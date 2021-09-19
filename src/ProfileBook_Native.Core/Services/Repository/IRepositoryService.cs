@@ -8,15 +8,40 @@ namespace ProfileBook_Native.Core.Services.Repository
 {
     public interface IRepositoryService
     {
-        public interface IRepositoryService
-        {
-            Task<List<T>> GetAllAsync<T>() where T : IEntityBase, new();
-            Task<IEnumerable<T>> GetAllAsync<T>(Expression<Func<T, bool>> predicate = null) where T : IEntityBase, new();
-            Task<T> GetByIdAsync<T>(int id) where T : IEntityBase, new();
-            Task<T> GetAsync<T>(Expression<Func<T, bool>> predicate) where T : IEntityBase, new();
-            Task<int> InsertAsync<T>(T entity) where T : IEntityBase, new();
-            Task<int> UpdateAsync<T>(T entity) where T : IEntityBase, new();
-            Task<int> DeleteAsync<T>(T entity) where T : IEntityBase, new();
-        }
+        Task<IEnumerable<T>> GetAllAsync<T>()
+            where T : class, IEntityBase, new();
+
+        Task<T> GetSingleByIdAsync<T>(int id)
+            where T : class, IEntityBase, new();
+
+        Task<T> GetSingleAsync<T>(Expression<Func<T, bool>> predicate)
+            where T : class, IEntityBase, new();
+
+        Task<IEnumerable<T>> FindWhereAsync<T>(Expression<Func<T, bool>> predicate)
+            where T : class, IEntityBase, new();
+
+        Task DeleteAsync<T>(T entity)
+            where T : class, IEntityBase, new();
+
+        Task DeleteWhereAsync<T>(Expression<Func<T, bool>> predicate)
+            where T : class, IEntityBase, new();
+
+        Task DeleteAllAsync<T>()
+            where T : class, IEntityBase, new();
+
+        Task DeleteAllAsync<T>(IEnumerable<T> entities)
+            where T : class, IEntityBase, new();
+
+        Task<int> SaveOrUpdateAsync<T>(T entity)
+            where T : class, IEntityBase, new();
+
+        Task SaveOrUpdateRangeAsync<T>(IEnumerable<T> entities)
+            where T : class, IEntityBase, new();
+
+        Task<int> CountAsync<T>()
+            where T : class, IEntityBase, new();
+
+        Task<int> SaveAsync<T>(T entity)
+            where T : class, IEntityBase, new();
     }
 }

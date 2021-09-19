@@ -232,5 +232,17 @@ namespace ProfileBook_Native.Core.Resources.Strings {
                 return ResourceManager.GetString("ChooseLanguage", resourceCulture);
             }
         }
+        
+        public static string RememberMe {
+            get {
+                return ResourceManager.GetString("RememberMe", resourceCulture);
+            }
+        }
+        
+        public static string InvalidLoginOrPassword {
+            get {
+                return ResourceManager.GetString("InvalidLoginOrPassword", resourceCulture);
+            }
+        }
     }
 }

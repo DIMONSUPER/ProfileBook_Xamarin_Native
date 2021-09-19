@@ -1,3 +1,4 @@
+using CoreGraphics;
 using Foundation;
 using MvvmCross.Binding.BindingContext;
 using ProfileBook_Native.Core.Resources.Strings;
@@ -15,7 +16,9 @@ namespace ProfileBook_Native.iOS.Views.SignIn
             base.ViewDidLoad();
             SetLocalizableStrings();
             SetSignInButtonStyle();
+            SetRememberMeSwitchStyle();
             SetBindings();
+            this.NavigationItem.HidesBackButton = true;
         }
 
         #endregion
@@ -26,8 +29,9 @@ namespace ProfileBook_Native.iOS.Views.SignIn
         {
             this.CreateBinding(LoginTextField).To<SignInViewModel>(vm => vm.Login).Apply();
             this.CreateBinding(PasswordTextField).To<SignInViewModel>(vm => vm.Password).Apply();
-            this.CreateBinding(SignInButton).To<SignInViewModel>(vm => vm.SignInCommand).Apply();
-            this.CreateBinding(SignUpButton).To<SignInViewModel>(vm => vm.SignUpCommand).Apply();
+            this.CreateBinding(SignInButton).To<SignInViewModel>(vm => vm.SignInButtonTappedCommand).Apply();
+            this.CreateBinding(SignUpButton).To<SignInViewModel>(vm => vm.SignUpButtonTappedCommand).Apply();
+            this.CreateBinding(RememberMeSwitch).To<SignInViewModel>(vm => vm.IsRememberMe).Apply();
         }
 
         private void SetLocalizableStrings()
@@ -35,6 +39,7 @@ namespace ProfileBook_Native.iOS.Views.SignIn
             Title = Strings.SignInPage;
             LoginTextField.Placeholder = Strings.Login;
             PasswordTextField.Placeholder = Strings.Password;
+            RememberMeLabel.Text = Strings.RememberMe;
             SignInButton.SetTitle(Strings.SignIn.ToUpper(), UIControlState.Normal);
             SignUpButton.SetAttributedTitle(new(Strings.SignUp.ToUpper(), underlineStyle: NSUnderlineStyle.Single), UIControlState.Normal);
         }
@@ -44,6 +49,11 @@ namespace ProfileBook_Native.iOS.Views.SignIn
             SignInButton.Layer.BorderColor = UIColor.Black.CGColor;
             SignInButton.Layer.BorderWidth = 1;
             SignInButton.SetTitleColor(UIColor.FromRGBA(0, 0, 0, 127), UIControlState.Disabled);
+        }
+
+        private void SetRememberMeSwitchStyle()
+        {
+            RememberMeSwitch.Transform = CGAffineTransform.MakeScale(0.8f, 0.8f);
         }
 
         #endregion

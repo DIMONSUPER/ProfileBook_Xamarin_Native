@@ -1,8 +1,7 @@
-using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using ProfileBook_Native.Core.Models;
-using static ProfileBook_Native.Core.Services.Repository.IRepositoryService;
+using ProfileBook_Native.Core.Services.Repository;
 
 namespace ProfileBook_Native.Core.Services.Profile
 {
@@ -17,14 +16,14 @@ namespace ProfileBook_Native.Core.Services.Profile
 
         #region -- IProfileService implementation --
 
-        public Task<List<ProfileModel>> GetAllProfilesAsync()
+        public Task<IEnumerable<ProfileModel>> GetAllProfilesAsync()
         {
             return _repositoryService.GetAllAsync<ProfileModel>();
         }
 
-        public Task<int> SaveProfileAsync(ProfileModel profileModel)
+        public Task<int> SaveOrUpdateProfileAsync(ProfileModel profileModel)
         {
-            return _repositoryService.InsertAsync(profileModel);
+            return _repositoryService.SaveOrUpdateAsync(profileModel);
         }
 
         #endregion

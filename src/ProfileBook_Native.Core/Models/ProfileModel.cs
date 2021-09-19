@@ -3,7 +3,7 @@ using SQLite;
 
 namespace ProfileBook_Native.Core.Models
 {
-    [Table("Profiles")]
+    [Table(Constants.PROFILES_TABLE_NAME)]
     public class ProfileModel : IEntityBase
     {
         [PrimaryKey, AutoIncrement]

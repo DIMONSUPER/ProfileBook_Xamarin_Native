@@ -1,78 +1,161 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 using ProfileBook_Native.Core.Models;
 using SQLite;
+using SQLiteNetExtensionsAsync.Extensions;
 
 namespace ProfileBook_Native.Core.Services.Repository
 {
     public class RepositoryService : IRepositoryService
     {
-        private readonly SQLiteAsyncConnection _database;
+        private Lazy<SQLiteAsyncConnection> _database;
+
+        public static RepositoryService Instance { get; private set; }
 
         public RepositoryService()
         {
-            var path = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
-            _database = new SQLiteAsyncConnection(Path.Combine(path, Constants.DATABASE_NAME));
-            InitTableAsync().Wait();
+            InitDatabaseAndTables();
+
+            Instance = this;
         }
 
         #region -- IRepositoryService implementation --
 
-        public async Task<int> DeleteAsync<T>(T entity) where T : IEntityBase, new()
+        public async Task DeleteAllAsync<T>()
+            where T : class, IEntityBase, new()
         {
-            return await _database.DeleteAsync(entity);
+            await _database.Value.DropTableAsync<T>();
+            await _database.Value.CreateTableAsync<T>();
         }
 
-        public async Task<IEnumerable<T>> GetAllAsync<T>(Expression<Func<T, bool>> predicate = null) where T : IEntityBase, new()
+        public async Task<int> CountAsync<T>()
+            where T : class, IEntityBase, new()
         {
-            var table = _database.Table<T>();
-            List<T> result = predicate == null ? await table.ToListAsync() : await table.Where(predicate).ToListAsync();
-            return result;
+            return await _database.Value.Table<T>().CountAsync();
         }
 
-        public async Task<List<T>> GetAllAsync<T>() where T : IEntityBase, new()
+        public async Task<IEnumerable<T>> GetAllAsync<T>()
+            where T : class, IEntityBase, new()
         {
-            var table = _database.Table<T>();
-            List<T> result = await table.ToListAsync();
-            return result;
+            return await _database.Value.GetAllWithChildrenAsync<T>();
         }
 
-        public async Task<T> GetAsync<T>(Expression<Func<T, bool>> predicate) where T : IEntityBase, new()
+        public Task<T> GetSingleByIdAsync<T>(int id)
+            where T : class, IEntityBase, new()
         {
-            return await _database.FindAsync(predicate);
+            return GetSingleAsync<T>(x => x.Id == id);
         }
 
-        public async Task<T> GetByIdAsync<T>(int id) where T : IEntityBase, new()
+        public async Task<int> SaveAsync<T>(T entity)
+            where T : class, IEntityBase, new()
         {
-            return await _database.GetAsync<T>(id);
-        }
+            var row = -1;
 
-        private async Task InitTableAsync()
-        {
-            await _database.CreateTableAsync<ProfileModel>();
-            await _database.CreateTableAsync<UserModel>();
-        }
-
-        public async Task<int> InsertAsync<T>(T entity) where T : IEntityBase, new()
-        {
-            int result = -1;
-            try
+            if (entity is not null)
             {
-                result = entity.Id != 0 ? await UpdateAsync(entity) : await _database.InsertAsync(entity);
-            }
-            catch
-            {
+                row = await _database.Value.InsertAsync(entity);
             }
 
-            return result;
+            return row;
         }
 
-        public async Task<int> UpdateAsync<T>(T entity) where T : IEntityBase, new()
+        public async Task<int> SaveOrUpdateAsync<T>(T entity)
+            where T : class, IEntityBase, new()
         {
-            return await _database.UpdateAsync(entity);
+            var row = -1;
+
+            if (entity is not null)
+            {
+                var existEntity = await GetSingleAsync<T>(x => x.Id == entity.Id);
+
+                if (existEntity is null)
+                {
+                    row = await _database.Value.InsertAsync(entity);
+                }
+                else
+                {
+                    entity.Id = existEntity.Id;
+                    row = await _database.Value.UpdateAsync(entity);
+                }
+            }
+
+            return row;
+        }
+
+        public async Task DeleteAsync<T>(T entity)
+            where T : class, IEntityBase, new()
+        {
+            if (entity is not null)
+            {
+                await _database.Value.DeleteAsync(entity);
+            }
+        }
+
+        public async Task SaveOrUpdateRangeAsync<T>(IEnumerable<T> entities)
+            where T : class, IEntityBase, new()
+        {
+            if (entities is not null && entities.Any())
+            {
+                foreach (var entity in entities)
+                {
+                    await SaveOrUpdateAsync(entity);
+                }
+            }
+        }
+
+        public async Task DeleteAllAsync<T>(IEnumerable<T> entities)
+            where T : class, IEntityBase, new()
+        {
+            if (entities is not null && entities.Any())
+            {
+                foreach (var entity in entities)
+                {
+                    await DeleteAsync(entity);
+                }
+            }
+        }
+
+        public async Task<T> GetSingleAsync<T>(Expression<Func<T, bool>> predicate)
+            where T : class, IEntityBase, new()
+        {
+            var allMatched = await FindWhereAsync(predicate);
+
+            return allMatched?.FirstOrDefault();
+        }
+
+        public async Task<IEnumerable<T>> FindWhereAsync<T>(Expression<Func<T, bool>> predicate)
+            where T : class, IEntityBase, new()
+        {
+            return await _database.Value.GetAllWithChildrenAsync(predicate);
+        }
+
+        public async Task DeleteWhereAsync<T>(Expression<Func<T, bool>> predicate)
+            where T : class, IEntityBase, new()
+        {
+            var result = await FindWhereAsync(predicate);
+
+            await DeleteAllAsync(result);
+        }
+
+        #endregion
+
+        #region -- Private Helpers --
+
+        private void InitDatabaseAndTables()
+        {
+            _database = new Lazy<SQLiteAsyncConnection>(() =>
+            {
+                var database = new SQLiteAsyncConnection(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), Constants.DATABASE_NAME));
+
+                database.CreateTableAsync<UserModel>().Wait();
+                database.CreateTableAsync<ProfileModel>().Wait();
+
+                return database;
+            });
         }
 
         #endregion

@@ -1,4 +1,5 @@
 using System.Linq;
+using System.Text;
 using Acr.UserDialogs;
 using MvvmCross.Commands;
 using MvvmCross.Navigation;
@@ -32,7 +33,7 @@ namespace ProfileBook_Native.Core.ViewModels.SignUp
             set
             {
                 SetProperty(ref _login, value);
-                SignUpCommand.RaiseCanExecuteChanged();
+                SignUpButtonTappedCommand?.RaiseCanExecuteChanged();
             }
         }
 
@@ -43,7 +44,7 @@ namespace ProfileBook_Native.Core.ViewModels.SignUp
             set
             {
                 SetProperty(ref _password, value);
-                SignUpCommand.RaiseCanExecuteChanged();
+                SignUpButtonTappedCommand?.RaiseCanExecuteChanged();
             }
         }
 
@@ -54,12 +55,12 @@ namespace ProfileBook_Native.Core.ViewModels.SignUp
             set
             {
                 SetProperty(ref _confirmPassword, value);
-                SignUpCommand.RaiseCanExecuteChanged();
+                SignUpButtonTappedCommand?.RaiseCanExecuteChanged();
             }
         }
 
-        private IMvxCommand _signUpCommand;
-        public IMvxCommand SignUpCommand => _signUpCommand ??= new MvxCommand(OnSignUpCommandAsync, CanExecute);
+        private IMvxCommand _signUpButtonTappedCommand;
+        public IMvxCommand SignUpButtonTappedCommand => _signUpButtonTappedCommand ??= new MvxCommand(OnSignUpButtonTappedCommandAsync, CanExecute);
 
         #endregion
 
@@ -70,23 +71,62 @@ namespace ProfileBook_Native.Core.ViewModels.SignUp
             return !string.IsNullOrEmpty(Login) && !string.IsNullOrEmpty(Password) && !string.IsNullOrEmpty(ConfirmPassword);
         }
 
-        private async void OnSignUpCommandAsync()
+        private async void OnSignUpButtonTappedCommandAsync()
         {
             var users = await _userService.GetAllUsersAsync();
 
-            if (users.Any(x => x.Login == Login))
+            if (!users.Any(x => x.Login == Login))
             {
-                _userDialogs.Alert(Strings.LoginWarning2);
+                var loginMsg = GetValidationLoginMessage();
+
+                if (string.IsNullOrEmpty(loginMsg))
+                {
+                    var passwordMsg = GetValidationPasswordMessage();
+
+                    if (string.IsNullOrEmpty(passwordMsg))
+                    {
+                        var newUser = new UserModel { Login = Login, Password = Password };
+                        await _userService.SaveUserAsync(newUser);
+                        await NavigationService.Close(this, newUser);
+                    }
+                    else
+                    {
+                        _userDialogs.Alert(passwordMsg);
+                    }
+                }
+                else
+                {
+                    _userDialogs.Alert(loginMsg);
+                }
             }
             else
             {
-                var newUser = new UserModel { Login = Login, };
-                await _userService.SaveUserAsync(newUser);
-                await NavigationService.Close(this, newUser);
+                _userDialogs.Alert(Strings.LoginWarning2);
             }
         }
 
-        
+        private string GetValidationLoginMessage()
+        {
+            var builder = new StringBuilder();
+
+            builder.Append((Login.Length < 4 || Login.Length > 16) ? Strings.LoginWarning1 + '\n' : string.Empty);
+            builder.Append(char.IsDigit(Login[0]) ? Strings.LoginWarning3 : string.Empty);
+
+            return builder.ToString();
+        }
+
+        private string GetValidationPasswordMessage()
+        {
+            var builder = new StringBuilder();
+
+            builder.Append((Password.Length < 8 || Login.Length > 16) ? Strings.PasswordWarning1 + '\n' : string.Empty);
+            builder.Append((Password != ConfirmPassword) ? Strings.ConfirmPasswordWarning + '\n' : string.Empty);
+            builder.Append((!Password.Any(x => char.IsUpper(x)) || !Password.Any(x => char.IsLower(x)) || !Password.Any(x => char.IsDigit(x)))
+                ? Strings.PasswordWarning2
+                : string.Empty);
+
+            return builder.ToString();
+        }
 
         #endregion
     }

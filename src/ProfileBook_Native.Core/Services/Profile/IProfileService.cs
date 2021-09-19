@@ -6,7 +6,7 @@ namespace ProfileBook_Native.Core.Services.Profile
 {
     public interface IProfileService
     {
-        Task<List<ProfileModel>> GetAllProfilesAsync();
-        Task<int> SaveProfileAsync(ProfileModel profileModel);
+        Task<IEnumerable<ProfileModel>> GetAllProfilesAsync();
+        Task<int> SaveOrUpdateProfileAsync(ProfileModel profileModel);
     }
 }

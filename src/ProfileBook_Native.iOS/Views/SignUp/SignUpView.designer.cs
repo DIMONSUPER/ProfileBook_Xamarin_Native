@@ -5,11 +5,10 @@
 // Manual changes to this file may not be handled correctly.
 //
 using Foundation;
-using System.CodeDom.Compiler;
 
 namespace ProfileBook_Native.iOS.Views.SignUp
 {
-	[Register ("SignUpView")]
+    [Register (nameof(SignUpView))]
 	partial class SignUpView
 	{
 		[Outlet]

@@ -12,6 +12,8 @@
             <connections>
                 <outlet property="LoginTextField" destination="jhk-ek-7zc" id="ri2-8V-gt9"/>
                 <outlet property="PasswordTextField" destination="0zw-yP-TOc" id="laZ-ta-JFD"/>
+                <outlet property="RememberMeLabel" destination="KAp-fJ-6Tr" id="SEl-qb-ino"/>
+                <outlet property="RememberMeSwitch" destination="UjR-yo-FSl" id="Itx-rG-mh8"/>
                 <outlet property="SignInButton" destination="3es-P4-ArE" id="Cdw-Zl-i9g"/>
                 <outlet property="SignUpButton" destination="m06-Zr-WIO" id="ab6-IK-all"/>
                 <outlet property="view" destination="oUm-F3-ymz" id="ytn-EX-Wmg"/>
@@ -26,7 +28,7 @@
                     <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                     <subviews>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Jt0-ka-5kl">
-                            <rect key="frame" x="40" y="269.5" width="334" height="88"/>
+                            <rect key="frame" x="40" y="244" width="334" height="139"/>
                             <subviews>
                                 <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="jhk-ek-7zc">
                                     <rect key="frame" x="0.0" y="0.0" width="334" height="34"/>
@@ -40,16 +42,30 @@
                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                     <textInputTraits key="textInputTraits" secureTextEntry="YES"/>
                                 </textField>
+                                <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="UjR-yo-FSl">
+                                    <rect key="frame" x="0.0" y="108" width="51" height="31"/>
+                                    <color key="onTintColor" systemColor="linkColor"/>
+                                </switch>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Remember me" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KAp-fJ-6Tr">
+                                    <rect key="frame" x="69" y="113.5" width="111.5" height="20.5"/>
+                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                    <nil key="textColor"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
                             </subviews>
                             <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                             <constraints>
+                                <constraint firstItem="UjR-yo-FSl" firstAttribute="top" secondItem="0zw-yP-TOc" secondAttribute="bottom" constant="20" id="40J-xt-NzM"/>
+                                <constraint firstAttribute="bottom" secondItem="UjR-yo-FSl" secondAttribute="bottom" id="438-DI-IGT"/>
                                 <constraint firstItem="0zw-yP-TOc" firstAttribute="leading" secondItem="jhk-ek-7zc" secondAttribute="leading" id="DYa-1I-BEZ"/>
                                 <constraint firstItem="0zw-yP-TOc" firstAttribute="top" secondItem="jhk-ek-7zc" secondAttribute="bottom" constant="20" id="Ex2-Gk-1bV"/>
+                                <constraint firstItem="KAp-fJ-6Tr" firstAttribute="leading" secondItem="UjR-yo-FSl" secondAttribute="trailing" constant="20" id="Ikh-wH-gGf"/>
                                 <constraint firstAttribute="trailing" secondItem="jhk-ek-7zc" secondAttribute="trailing" id="cvS-te-kxj"/>
-                                <constraint firstAttribute="bottom" secondItem="0zw-yP-TOc" secondAttribute="bottom" id="fHw-X5-ZhB"/>
+                                <constraint firstItem="KAp-fJ-6Tr" firstAttribute="centerY" secondItem="UjR-yo-FSl" secondAttribute="centerY" id="k1R-45-Lkq"/>
                                 <constraint firstItem="jhk-ek-7zc" firstAttribute="leading" secondItem="Jt0-ka-5kl" secondAttribute="leading" id="s6c-3c-Ti5"/>
                                 <constraint firstItem="jhk-ek-7zc" firstAttribute="top" secondItem="Jt0-ka-5kl" secondAttribute="top" id="v1L-WB-MFN"/>
                                 <constraint firstItem="0zw-yP-TOc" firstAttribute="trailing" secondItem="jhk-ek-7zc" secondAttribute="trailing" id="yBp-Vc-cNr"/>
+                                <constraint firstItem="UjR-yo-FSl" firstAttribute="leading" secondItem="Jt0-ka-5kl" secondAttribute="leading" id="zL5-HP-AwR"/>
                             </constraints>
                         </view>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fRb-uu-njU">
@@ -117,6 +133,9 @@
         </view>
     </objects>
     <resources>
+        <systemColor name="linkColor">
+            <color red="0.0" green="0.47843137254901963" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
