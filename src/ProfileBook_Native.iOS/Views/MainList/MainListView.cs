@@ -1,8 +1,6 @@
-using CoreGraphics;
 using MvvmCross.Binding.BindingContext;
 using ProfileBook_Native.Core.Resources.Strings;
 using ProfileBook_Native.Core.ViewModels.MainList;
-using ProfileBook_Native.iOS.Views.SignIn;
 using UIKit;
 
 namespace ProfileBook_Native.iOS.Views.MainList
@@ -14,15 +12,30 @@ namespace ProfileBook_Native.iOS.Views.MainList
         public override void ViewDidLoad()
         {
             base.ViewDidLoad();
+            NavigationItem.HidesBackButton = true;
             CreateToolBar();
+            SetAddButtonStyle();
             SetLocalizableStrings();
-            BindCollectionView();
-            this.NavigationItem.HidesBackButton = true;
+            SetBindings();
         }
 
         #endregion
 
         #region -- Private helpers --
+
+        private void SetBindings()
+        {
+            this.CreateBinding(ProfilesEmptyLabel).For(x => x.Hidden).To<MainListViewModel>(vm => vm.HasProfiles).Apply();
+            this.CreateBinding(AddButton).To<MainListViewModel>(vm => vm.AddButtonTappedCommand).Apply();
+            
+            BindCollectionView();
+        }
+
+        private void SetAddButtonStyle()
+        {
+            AddButton.Layer.BorderColor = UIColor.Black.CGColor;
+            AddButton.Layer.BorderWidth = 1;
+        }
 
         private void CreateToolBar()
         {
@@ -52,7 +65,7 @@ namespace ProfileBook_Native.iOS.Views.MainList
         private void SetLocalizableStrings()
         {
             Title = Strings.MainList;
-
+            ProfilesEmptyLabel.Text = Strings.NoProfiles;
         }
 
         private void BindCollectionView()

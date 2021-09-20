@@ -1,4 +1,5 @@
 using System;
+using System.Windows.Input;
 using MvvmCross.Commands;
 using MvvmCross.ViewModels;
 
@@ -57,22 +58,22 @@ namespace ProfileBook_Native.Core.Models
             set => SetProperty(ref _date, value);
         }
 
-        private IMvxCommand _tapCommad;
-        public IMvxCommand TapCommad
+        private ICommand _tapCommad;
+        public ICommand TapCommad
         {
             get => _tapCommad;
             set => SetProperty(ref _tapCommad, value);
         }
 
-        private IMvxCommand _editCommad;
-        public IMvxCommand EditCommad
+        private ICommand _editCommad;
+        public ICommand EditCommad
         {
             get => _editCommad;
             set => SetProperty(ref _editCommad, value);
         }
 
-        private IMvxCommand _deleteCommad;
-        public IMvxCommand DeleteCommand
+        private ICommand _deleteCommad;
+        public ICommand DeleteCommand
         {
             get => _deleteCommad;
             set => SetProperty(ref _deleteCommad, value);

@@ -1,15 +1,14 @@
-using System;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
-using MvvmCross;
+using System.Windows.Input;
 using MvvmCross.Commands;
 using MvvmCross.Navigation;
-using MvvmCross.Presenters.Hints;
-using MvvmCross.ViewModels;
 using ProfileBook_Native.Core.Models;
+using ProfileBook_Native.Core.Services.MapperService;
 using ProfileBook_Native.Core.Services.Profile;
 using ProfileBook_Native.Core.Services.User;
+using ProfileBook_Native.Core.ViewModels.AddEditProfile;
 using ProfileBook_Native.Core.ViewModels.SignIn;
 
 namespace ProfileBook_Native.Core.ViewModels.MainList
@@ -18,15 +17,18 @@ namespace ProfileBook_Native.Core.ViewModels.MainList
     {
         private readonly IProfileService _profileService;
         private readonly IUserService _userService;
+        private readonly IMapperService _mapperService;
 
         public MainListViewModel(
             IMvxNavigationService navigationService,
             IProfileService profileService,
-            IUserService userService)
+            IUserService userService,
+            IMapperService mapperService)
             : base(navigationService)
         {
             _profileService = profileService;
             _userService = userService;
+            _mapperService = mapperService;
 
             Profiles = new();
         }
@@ -40,77 +42,102 @@ namespace ProfileBook_Native.Core.ViewModels.MainList
             set => SetProperty(ref _profiles, value);
         }
 
-        private IMvxCommand _logOutButtonTappedCommand;
-        public IMvxCommand LogOutButtonTappedCommand => _logOutButtonTappedCommand ??= new MvxCommand(OnLogOutButtonTappedCommand);
+        private bool _hasProfiles;
+        public bool HasProfiles
+        {
+            get => _hasProfiles;
+            set => SetProperty(ref _hasProfiles, value);
+        }
 
-        private IMvxCommand _settingsButtonTappedCommand;
-        public IMvxCommand SettingsButtonTappedCommand => _settingsButtonTappedCommand ??= new MvxCommand(OnSettingsButtonTappedCommand);
+        private ICommand _logOutButtonTappedCommand;
+        public ICommand LogOutButtonTappedCommand => _logOutButtonTappedCommand ??= new MvxCommand(OnLogOutButtonTappedCommandAsync);
 
-        private IMvxCommand _editButtonTappedCommand;
-        public IMvxCommand EditButtonTappedCommand => _editButtonTappedCommand ??= new MvxCommand(OnEditButtonTappedCommand);
+        private ICommand _settingsButtonTappedCommand;
+        public ICommand SettingsButtonTappedCommand => _settingsButtonTappedCommand ??= new MvxCommand(OnSettingsButtonTappedCommand);
 
-        private IMvxCommand _deleteButtonTappedCommand;
-        public IMvxCommand DeleteButtonTappedCommand => _deleteButtonTappedCommand ??= new MvxCommand(OnDeleteButtonTappedCommandAsync);
+        private ICommand _editButtonTappedCommand;
+        public ICommand EditButtonTappedCommand => _editButtonTappedCommand ??= new MvxCommand<ProfileBindableModel>(OnEditButtonTappedCommand);
 
-        private IMvxCommand _profileTappedCommand;
-        public IMvxCommand ProfileTappedCommand => _profileTappedCommand ??= new MvxCommand(OnProfileTappedCommand);
+        private ICommand _deleteButtonTappedCommand;
+        public ICommand DeleteButtonTappedCommand => _deleteButtonTappedCommand ??= new MvxCommand<ProfileBindableModel>(OnDeleteButtonTappedCommandAsync);
+
+        private ICommand _profileTappedCommand;
+        public ICommand ProfileTappedCommand => _profileTappedCommand ??= new MvxCommand<ProfileBindableModel>(OnProfileTappedCommandAsync);
+
+        private ICommand _addButtonTappedCommand;
+        public ICommand AddButtonTappedCommand => _addButtonTappedCommand ??= new MvxCommand(OnAddButtonTappedCommandAsync);
 
         #endregion
 
         #region -- Overrides --
 
-        public override async Task Initialize()
+        public override Task Initialize()
         {
-            await base.Initialize();
+            base.Initialize();
 
-            await UpdateProfilesAsync();
+            UpdateProfilesAsync();
+
+            return Task.CompletedTask;
         }
 
         #endregion
 
         #region -- Private helpers --
 
-        private void OnLogOutButtonTappedCommand()
+        private async void OnAddButtonTappedCommandAsync()
+        {
+            var newProfile = await NavigationService.Navigate<ProfileBindableModel>(typeof(AddEditProfileViewModel));
+
+            if (newProfile != null)
+            {
+                UpdateProfilesAsync();
+            }
+        }
+
+        private async void OnLogOutButtonTappedCommandAsync()
         {
             _userService.IsRememberMe = false;
             _userService.IsAuthCompleted = false;
             _userService.UserId = -1;
-            NavigationService.Navigate<SignInViewModel>();
+
+            await Task.WhenAll(NavigationService.Navigate<SignInViewModel>(), NavigationService.Close(this));
         }
 
         private void OnSettingsButtonTappedCommand()
         { }
 
-        private void OnEditButtonTappedCommand()
+        private void OnEditButtonTappedCommand(ProfileBindableModel profile)
         { }
 
-        private void OnDeleteButtonTappedCommandAsync()
-        { }
-
-        private void OnProfileTappedCommand()
-        { }
-
-        private async Task UpdateProfilesAsync()
+        private void OnDeleteButtonTappedCommandAsync(ProfileBindableModel profile)
         {
-            //var profiles = await _profileService.GetAllProfilesAsync();
+            HasProfiles = Profiles.Any();
+        }
 
-            //Profiles = new(profiles.Where(x => x.UserId == _userService.UserId));
-            Profiles = new()
-            {
-                new() { Name ="Dima", NickName = "Dimas", Description = "Description",  Date = DateTime.Now },
-                new() { Name ="Dima", NickName = "Dimas", Description = "Description",  Date = DateTime.Now },
-                new() { Name ="Dima", NickName = "Dimas", Description = "Description",  Date = DateTime.Now },
-                new() { Name ="Dima", NickName = "Dimas", Description = "Description",  Date = DateTime.Now },
-                new() { Name ="Dima", NickName = "Dimas", Description = "Description",  Date = DateTime.Now },
-                new() { Name ="Dima", NickName = "Dimas", Description = "Description",  Date = DateTime.Now },
-                new() { Name ="Dima", NickName = "Dimas", Description = "Description",  Date = DateTime.Now },
-            };
+        private async void OnProfileTappedCommandAsync(ProfileBindableModel profile)
+        {
+            var editedProfile = await NavigationService.Navigate<ProfileBindableModel, ProfileBindableModel>(typeof(AddEditProfileViewModel), profile);
 
-            Task.Run(async () =>
+            if (editedProfile != null)
             {
-                await Task.Delay(5000);
-                InvokeOnMainThread(() => Profiles[2].Name = "LOOOOOL");
+                UpdateProfilesAsync();
+            }
+        }
+
+        private async void UpdateProfilesAsync()
+        {
+            var profiles = await _profileService.GetAllProfilesAsync();
+
+            var profileBindableModels = await _mapperService.MapRangeAsync<ProfileModel, ProfileBindableModel>(profiles, (m, vm) =>
+            {
+                vm.TapCommad = ProfileTappedCommand;
+                vm.EditCommad = EditButtonTappedCommand;
+                vm.DeleteCommand = DeleteButtonTappedCommand;
             });
+
+            Profiles = new(profileBindableModels.Where(x => x.UserId == _userService.UserId));
+
+            HasProfiles = Profiles.Any();
         }
 
         #endregion

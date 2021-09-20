@@ -191,6 +191,12 @@ namespace ProfileBook_Native.Core.Resources.Strings {
             }
         }
         
+        public static string EditProfile {
+            get {
+                return ResourceManager.GetString("EditProfile", resourceCulture);
+            }
+        }
+        
         public static string Save {
             get {
                 return ResourceManager.GetString("Save", resourceCulture);

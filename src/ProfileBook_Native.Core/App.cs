@@ -1,9 +1,12 @@
-﻿using Acr.UserDialogs;
+﻿using System.Threading.Tasks;
+using Acr.UserDialogs;
 using MvvmCross;
 using MvvmCross.IoC;
+using MvvmCross.Navigation;
 using MvvmCross.ViewModels;
 using Plugin.Settings;
 using ProfileBook_Native.Core.Services.Settings;
+using ProfileBook_Native.Core.Services.User;
 using ProfileBook_Native.Core.ViewModels.MainList;
 using ProfileBook_Native.Core.ViewModels.SignIn;
 
@@ -21,17 +24,39 @@ namespace ProfileBook_Native.Core
             Mvx.IoCProvider.RegisterSingleton(UserDialogs.Instance);
             Mvx.IoCProvider.RegisterSingleton(CrossSettings.Current);
 
-            if (Mvx.IoCProvider.TryResolve(out ISettingsService settingsService))
-            {
-                if (settingsService.IsAuthCompleted)
-                {
-                    RegisterAppStart<MainListViewModel>();
-                }
-                else
-                {
-                    RegisterAppStart<SignInViewModel>();
-                }
-            }
+            RegisterCustomAppStart<AppStart>();
         }
+    }
+
+    public class AppStart : MvxAppStart
+    {
+        private readonly IUserService _userService;
+
+        public AppStart(
+            IMvxApplication application,
+            IMvxNavigationService navigationService,
+            IUserService userService)
+            : base(application, navigationService)
+        {
+            _userService = userService;
+        }
+
+        #region -- Overrides --
+
+        protected override Task NavigateToFirstViewModel(object hint = null)
+        {
+            if (_userService.IsAuthCompleted)
+            {
+                NavigationService.Navigate<MainListViewModel>().GetAwaiter().GetResult();
+            }
+            else
+            {
+                NavigationService.Navigate<SignInViewModel>().GetAwaiter().GetResult();
+            }
+
+            return Task.CompletedTask;
+        }
+
+        #endregion
     }
 }

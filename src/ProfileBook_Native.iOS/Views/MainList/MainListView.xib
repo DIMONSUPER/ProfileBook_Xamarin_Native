@@ -10,6 +10,8 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="MainListView">
             <connections>
+                <outlet property="AddButton" destination="Qhx-m1-cIy" id="o9G-fH-Kdo"/>
+                <outlet property="ProfilesEmptyLabel" destination="eaB-3i-ZPb" id="XbN-Xf-gja"/>
                 <outlet property="ProfilesTableView" destination="s3I-Yc-mh7" id="h7G-at-htp"/>
                 <outlet property="view" destination="2" id="RRd-Eg-VrN"/>
             </connections>
@@ -26,13 +28,41 @@
                             <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                             <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         </tableView>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eaB-3i-ZPb">
+                            <rect key="frame" x="186" y="437.5" width="42" height="21"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                            <nil key="textColor"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Qhx-m1-cIy">
+                            <rect key="frame" x="320.5" y="758.5" width="56" height="56"/>
+                            <color key="backgroundColor" systemColor="linkColor"/>
+                            <inset key="contentEdgeInsets" minX="10" minY="10" maxX="10" maxY="10"/>
+                            <inset key="imageEdgeInsets" minX="5" minY="5" maxX="5" maxY="5"/>
+                            <state key="normal" image="ic_add.png"/>
+                            <userDefinedRuntimeAttributes>
+                                <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                    <integer key="value" value="28"/>
+                                </userDefinedRuntimeAttribute>
+                                <userDefinedRuntimeAttribute type="number" keyPath="layout.borderWidth">
+                                    <integer key="value" value="1"/>
+                                </userDefinedRuntimeAttribute>
+                                <userDefinedRuntimeAttribute type="color" keyPath="layout.borderColor">
+                                    <color key="value" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                </userDefinedRuntimeAttribute>
+                            </userDefinedRuntimeAttributes>
+                        </button>
                     </subviews>
                     <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     <constraints>
                         <constraint firstItem="s3I-Yc-mh7" firstAttribute="top" secondItem="Q5k-V3-dh4" secondAttribute="top" id="9pA-zE-nCD"/>
+                        <constraint firstItem="eaB-3i-ZPb" firstAttribute="centerY" secondItem="Q5k-V3-dh4" secondAttribute="centerY" id="B4w-8P-6W9"/>
                         <constraint firstAttribute="bottom" secondItem="s3I-Yc-mh7" secondAttribute="bottom" id="IKP-PG-5UK"/>
+                        <constraint firstAttribute="bottom" secondItem="Qhx-m1-cIy" secondAttribute="bottom" multiplier="1.1" id="PRH-Gr-v4h"/>
+                        <constraint firstItem="eaB-3i-ZPb" firstAttribute="centerX" secondItem="Q5k-V3-dh4" secondAttribute="centerX" id="e6H-WX-XTm"/>
                         <constraint firstAttribute="trailing" secondItem="s3I-Yc-mh7" secondAttribute="trailing" id="itR-4J-8gT"/>
                         <constraint firstItem="s3I-Yc-mh7" firstAttribute="leading" secondItem="Q5k-V3-dh4" secondAttribute="leading" id="nI4-km-jOO"/>
+                        <constraint firstAttribute="trailing" secondItem="Qhx-m1-cIy" secondAttribute="trailing" multiplier="1.1" id="rrD-JK-yLt"/>
                     </constraints>
                 </view>
             </subviews>
@@ -47,6 +77,10 @@
         </view>
     </objects>
     <resources>
+        <image name="ic_add.png" width="36" height="36"/>
+        <systemColor name="linkColor">
+            <color red="0.0" green="0.47843137254901963" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>

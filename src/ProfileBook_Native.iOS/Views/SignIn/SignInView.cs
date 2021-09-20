@@ -14,11 +14,11 @@ namespace ProfileBook_Native.iOS.Views.SignIn
         public override void ViewDidLoad()
         {
             base.ViewDidLoad();
+            NavigationItem.HidesBackButton = true;
             SetLocalizableStrings();
             SetSignInButtonStyle();
             SetRememberMeSwitchStyle();
             SetBindings();
-            this.NavigationItem.HidesBackButton = true;
         }
 
         #endregion

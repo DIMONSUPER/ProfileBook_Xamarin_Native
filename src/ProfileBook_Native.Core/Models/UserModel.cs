@@ -2,7 +2,6 @@ using SQLite;
 
 namespace ProfileBook_Native.Core.Models
 {
-    [Table(Constants.USERS_TABLE_NAME)]
     public class UserModel : IEntityBase
     {
         [PrimaryKey, AutoIncrement]

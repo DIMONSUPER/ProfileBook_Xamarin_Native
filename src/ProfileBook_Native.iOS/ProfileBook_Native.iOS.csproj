@@ -168,6 +168,13 @@
     <BundleResource Include="Resources\ic_exit_to_app.png" />
     <BundleResource Include="Resources\ic_save.png" />
     <BundleResource Include="Resources\ic_settings.png" />
+    <BundleResource Include="Resources\pic_profile.png" />
+    <InterfaceDefinition Include="Views\AddEditProfile\AddEditProfileView.xib" />
+    <Compile Include="Views\AddEditProfile\AddEditProfileView.cs" />
+    <Compile Include="Views\AddEditProfile\AddEditProfileView.designer.cs">
+      <DependentUpon>AddEditProfileView.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Converters\StringToImageConverter.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -270,6 +277,7 @@
     <Folder Include="Views\AddEditProfile\" />
     <Folder Include="Views\Settings\" />
     <Folder Include="Views\Cells\" />
+    <Folder Include="Converters\" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

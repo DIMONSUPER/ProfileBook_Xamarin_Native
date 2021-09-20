@@ -84,6 +84,9 @@
 	<data name="AddProfile" xml:space="preserve">
         <value>Add profile</value>
   </data>
+  <data name="EditProfile" xml:space="preserve">
+        <value>Edit profile</value>
+  </data>
 	<data name="Save" xml:space="preserve">
         <value>Save</value>
   </data>
