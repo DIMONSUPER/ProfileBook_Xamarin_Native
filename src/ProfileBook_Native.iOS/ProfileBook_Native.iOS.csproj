@@ -219,6 +219,15 @@
     <PackageReference Include="AutoMapper">
       <Version>10.1.1</Version>
     </PackageReference>
+    <PackageReference Include="MvvmCross.Plugin.PictureChooser">
+      <Version>8.0.2</Version>
+    </PackageReference>
+    <PackageReference Include="Xam.Plugin.Media">
+      <Version>5.0.1</Version>
+    </PackageReference>
+    <PackageReference Include="Plugin.Permissions">
+      <Version>6.0.1</Version>
+    </PackageReference>
   </ItemGroup>
   <ItemGroup>
     <ImageAsset Include="Resources\Media.xcassets\AppIcons.appiconset\Contents.json">
@@ -276,7 +285,6 @@
     <Folder Include="Views\MainList\" />
     <Folder Include="Views\AddEditProfile\" />
     <Folder Include="Views\Settings\" />
-    <Folder Include="Views\Cells\" />
     <Folder Include="Converters\" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />

@@ -1,4 +1,5 @@
 using CoreGraphics;
+using Foundation;
 using MvvmCross.Binding.BindingContext;
 using MvvmCross.Platforms.Ios.Views;
 using ProfileBook_Native.Core.Models;
@@ -24,6 +25,7 @@ namespace ProfileBook_Native.iOS.Views.AddEditProfile
             CreateToolBar();
             SetStyles();
             SetTranslations();
+            CreateObserver();
             SetBindings();
         }
 
@@ -31,22 +33,36 @@ namespace ProfileBook_Native.iOS.Views.AddEditProfile
 
         #region -- Private helpers --
 
+        private void CreateObserver()
+        {
+            var observer = NSNotificationCenter.DefaultCenter.AddObserver(UITextView.TextDidChangeNotification,
+                notification => DescriptionPlaceholderLabel.Hidden = !string.IsNullOrEmpty(DescriptionTextView.Text));
+        }
+
         private void SetTranslations()
         {
             NicknameLabel.Placeholder = Strings.NickName;
             NameLabel.Placeholder = Strings.Name;
-            //TODO: add placeholder for DescriptionTextView
+            DescriptionPlaceholderLabel.Text = Strings.Description;
+        }
+
+        public UIImage ProfileImage
+        {
+            get => ProfileImageButton.ImageView.Image;
+            set => ProfileImageButton.SetImage(value, UIControlState.Normal);
         }
 
         private void SetBindings()
         {
             this.CreateBinding().For(x => x.Title).To<AddEditProfileViewModel>(vm => vm.Title).Apply();
 
-            this.CreateBinding(ProfileImageView)
-            .For(x => x.Image)
+            this.CreateBinding()
+            .For(x => x.ProfileImage)
             .To<AddEditProfileViewModel>(vm => vm.CurrentProfile.ProfileImage)
             .WithConversion(new StringToImageConverter(), new CGSize(135, 150))
             .Apply();
+
+            this.CreateBinding(ProfileImageButton).To<AddEditProfileViewModel>(vm => vm.ProfileImageTappedCommand).Apply();
 
             this.CreateBinding(NicknameLabel).To<AddEditProfileViewModel>(vm => vm.CurrentProfile.NickName).Apply();
             this.CreateBinding(NameLabel).To<AddEditProfileViewModel>(vm => vm.CurrentProfile.Name).Apply();
@@ -55,14 +71,12 @@ namespace ProfileBook_Native.iOS.Views.AddEditProfile
 
         private void CreateToolBar()
         {
-            var saveButton = new UIButton() { Frame = new(0, 0, 25, 25) };
-            saveButton.SetBackgroundImage(UIImage.FromFile("ic_save.png"), UIControlState.Normal);
+            var saveButton = new UIButton();
+            saveButton.SetBackgroundImage(GetResizedImage(UIImage.FromFile("ic_save.png"), new(25, 25)), UIControlState.Normal);
             this.CreateBinding(saveButton).To<AddEditProfileViewModel>(vm => vm.SaveButtonTappedCommand).Apply();
 
-            var saveBarButton = new UIBarButtonItem() { CustomView = saveButton };
-
+            var saveBarButton = new UIBarButtonItem(saveButton);
             this.CreateBinding(saveBarButton).For(x => x.Enabled).To<AddEditProfileViewModel>(vm => vm.CanExecute).Apply();
-
             NavigationItem.SetRightBarButtonItem(saveBarButton, false);
         }
 
@@ -79,6 +93,17 @@ namespace ProfileBook_Native.iOS.Views.AddEditProfile
             NameLabel.Layer.BorderWidth = 1;
             NameLabel.Layer.BorderColor = UIColor.Black.CGColor;
             NameLabel.Layer.CornerRadius = 6;
+        }
+
+        private UIImage GetResizedImage(UIImage image, CGSize size)
+        {
+            UIGraphics.BeginImageContext(size);
+            image.Draw(new CGRect(0, 0, size.Width, size.Height));
+
+            var newImage = UIGraphics.GetImageFromCurrentImageContext();
+            UIGraphics.EndImageContext();
+
+            return newImage;
         }
 
         #endregion

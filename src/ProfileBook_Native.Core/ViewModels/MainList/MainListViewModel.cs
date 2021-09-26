@@ -71,13 +71,11 @@ namespace ProfileBook_Native.Core.ViewModels.MainList
 
         #region -- Overrides --
 
-        public override Task Initialize()
+        public override async void ViewAppearing()
         {
-            base.Initialize();
+            base.ViewAppearing();
 
-            UpdateProfilesAsync();
-
-            return Task.CompletedTask;
+            await UpdateProfilesAsync();
         }
 
         #endregion
@@ -90,7 +88,7 @@ namespace ProfileBook_Native.Core.ViewModels.MainList
 
             if (newProfile != null)
             {
-                UpdateProfilesAsync();
+                await UpdateProfilesAsync();
             }
         }
 
@@ -120,24 +118,27 @@ namespace ProfileBook_Native.Core.ViewModels.MainList
 
             if (editedProfile != null)
             {
-                UpdateProfilesAsync();
+                await UpdateProfilesAsync();
             }
         }
 
-        private async void UpdateProfilesAsync()
+        private async Task UpdateProfilesAsync()
         {
-            var profiles = await _profileService.GetAllProfilesAsync();
+            var profilesRequest = await _profileService.GetAllProfilesAsync();
 
-            var profileBindableModels = await _mapperService.MapRangeAsync<ProfileModel, ProfileBindableModel>(profiles, (m, vm) =>
+            if (profilesRequest.IsSuccess)
             {
-                vm.TapCommad = ProfileTappedCommand;
-                vm.EditCommad = EditButtonTappedCommand;
-                vm.DeleteCommand = DeleteButtonTappedCommand;
-            });
+                var profileBindableModels = await _mapperService.MapRangeAsync<ProfileModel, ProfileBindableModel>(profilesRequest.Result, (m, vm) =>
+                {
+                    vm.TapCommad = ProfileTappedCommand;
+                    vm.EditCommad = EditButtonTappedCommand;
+                    vm.DeleteCommand = DeleteButtonTappedCommand;
+                });
 
-            Profiles = new(profileBindableModels.Where(x => x.UserId == _userService.UserId));
+                Profiles = new(profileBindableModels.Where(x => x.UserId == _userService.UserId));
 
-            HasProfiles = Profiles.Any();
+                HasProfiles = Profiles.Any();
+            }
         }
 
         #endregion

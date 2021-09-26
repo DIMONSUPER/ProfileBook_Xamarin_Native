@@ -12,16 +12,16 @@ namespace ProfileBook_Native.iOS.Converters
 
         protected override UIImage Convert(string value, Type targetType, object parameter, CultureInfo culture)
         {
-            var defaultSize = new CGSize(90, 100);
+            var deafultValue = "pic_profile.png";
 
-            if (parameter is CGSize size)
+            if (parameter is string stringParameter)
             {
-                defaultSize = size;
+                deafultValue = stringParameter;
             }
 
             return !string.IsNullOrWhiteSpace(value)
-                ? GetResizedImage(UIImage.FromFile(value), defaultSize)
-                : GetResizedImage(UIImage.FromFile("pic_profile.png"), defaultSize);
+                ? UIImage.FromFile(value)
+                : UIImage.FromFile(deafultValue);
         }
 
         #endregion

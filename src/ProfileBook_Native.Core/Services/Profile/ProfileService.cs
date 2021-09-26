@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using ODBmobile.Helpers;
 using ProfileBook_Native.Core.Models;
 using ProfileBook_Native.Core.Services.Repository;
 
@@ -16,15 +17,11 @@ namespace ProfileBook_Native.Core.Services.Profile
 
         #region -- IProfileService implementation --
 
-        public Task<IEnumerable<ProfileModel>> GetAllProfilesAsync()
-        {
-            return _repositoryService.GetAllAsync<ProfileModel>();
-        }
+        public Task<AOResult<IEnumerable<ProfileModel>>> GetAllProfilesAsync() =>
+            AOResult.ExecuteTaskAsync(_ => _repositoryService.GetAllAsync<ProfileModel>());
 
-        public Task<int> SaveOrUpdateProfileAsync(ProfileModel profileModel)
-        {
-            return _repositoryService.SaveOrUpdateAsync(profileModel);
-        }
+        public Task<AOResult<int>> SaveOrUpdateProfileAsync(ProfileModel profileModel) =>
+            AOResult.ExecuteTaskAsync(_ => _repositoryService.SaveOrUpdateAsync(profileModel));
 
         #endregion
     }

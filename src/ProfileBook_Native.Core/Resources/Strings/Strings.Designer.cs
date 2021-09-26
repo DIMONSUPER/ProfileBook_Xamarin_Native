@@ -250,5 +250,11 @@ namespace ProfileBook_Native.Core.Resources.Strings {
                 return ResourceManager.GetString("InvalidLoginOrPassword", resourceCulture);
             }
         }
+        
+        public static string Cancel {
+            get {
+                return ResourceManager.GetString("Cancel", resourceCulture);
+            }
+        }
     }
 }

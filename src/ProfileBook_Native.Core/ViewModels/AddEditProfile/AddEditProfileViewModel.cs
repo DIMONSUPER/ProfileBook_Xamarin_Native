@@ -1,10 +1,13 @@
+using System;
 using System.Threading.Tasks;
-using System.Windows.Input;
+using Acr.UserDialogs;
 using MvvmCross.Commands;
 using MvvmCross.Navigation;
 using ProfileBook_Native.Core.Models;
 using ProfileBook_Native.Core.Resources.Strings;
 using ProfileBook_Native.Core.Services.MapperService;
+using ProfileBook_Native.Core.Services.Permission;
+using ProfileBook_Native.Core.Services.Photo;
 using ProfileBook_Native.Core.Services.Profile;
 using ProfileBook_Native.Core.Services.User;
 
@@ -15,17 +18,28 @@ namespace ProfileBook_Native.Core.ViewModels.AddEditProfile
         private readonly IProfileService _profileService;
         private readonly IUserService _userService;
         private readonly IMapperService _mapperService;
+        private readonly IPhotoService _photoService;
+        private readonly IPermissionService _permissionService;
+        private readonly IUserDialogs _userDialogs;
+
+        private bool _isEditMode;
 
         public AddEditProfileViewModel(
             IMvxNavigationService navigationService,
             IProfileService profileService,
             IUserService userService,
-            IMapperService mapperService)
+            IMapperService mapperService,
+            IPhotoService photoService,
+            IPermissionService permissionService,
+            IUserDialogs userDialogs)
             : base(navigationService)
         {
             _profileService = profileService;
             _userService = userService;
             _mapperService = mapperService;
+            _photoService = photoService;
+            _permissionService = permissionService;
+            _userDialogs = userDialogs;
         }
 
         #region -- Public properties --
@@ -54,25 +68,92 @@ namespace ProfileBook_Native.Core.ViewModels.AddEditProfile
         private IMvxCommand _saveButtonTappedCommand;
         public IMvxCommand SaveButtonTappedCommand => _saveButtonTappedCommand ??= new MvxCommand(OnSaveButtonTappedCommandAsync, () => CanExecute);
 
+        private IMvxCommand _profileImageTappedCommand;
+        public IMvxCommand ProfileImageTappedCommand => _profileImageTappedCommand ??= new MvxCommand(OnProfileImageTappedCommandAsync);
+
         #endregion
 
         #region -- Overrides --
 
         public override Task Initialize()
         {
+            Title = _isEditMode ? Strings.EditProfile : Strings.AddProfile;
+
             if (CurrentProfile is null)
             {
-                Title = Strings.AddProfile;
-
                 CurrentProfile = new ProfileBindableModel
                 {
                     UserId = _userService.UserId,
                 };
-
-                CurrentProfile.PropertyChanged += OnCurrenProfilePropertyChanged;
             }
 
+            CurrentProfile.PropertyChanged += OnCurrenProfilePropertyChanged;
+
             return Task.CompletedTask;
+        }
+
+        public override void Prepare(ProfileBindableModel parameter)
+        {
+            _isEditMode = true;
+            CurrentProfile = parameter;
+            CanExecute = !string.IsNullOrWhiteSpace(CurrentProfile?.NickName) && !string.IsNullOrWhiteSpace(CurrentProfile?.Name);
+        }
+
+        public override void ViewDestroy(bool viewFinishing = true)
+        {
+            CurrentProfile.PropertyChanged -= OnCurrenProfilePropertyChanged;
+
+            base.ViewDestroy(viewFinishing);
+        }
+
+        #endregion
+
+        #region -- Private helpers --
+
+        private void OnProfileImageTappedCommandAsync()
+        {
+            _userDialogs.ActionSheet(new ActionSheetConfig()
+                .Add(Strings.PickFromGallery, PickPhotoAsync, icon: "ic_collections.png")
+                .Add(Strings.TakeAPhoto, TakePhotoAsync, icon: "ic_camera_alt.png")
+                .SetCancel(Strings.Cancel));
+        }
+
+        private async void PickPhotoAsync()
+        {
+            var photoPermissionRequest = await _permissionService.RequestPhotosPermission();
+            var storagePermissionRequest = await _permissionService.RequestStoragePermission();
+
+            var isPermissionsGranted = photoPermissionRequest.IsSuccess && photoPermissionRequest.Result
+                                       && storagePermissionRequest.IsSuccess && storagePermissionRequest.Result;
+
+            if (isPermissionsGranted)
+            {
+                var photoRequest = await _photoService.PickPhotoAsync();
+
+                if (photoRequest.IsSuccess)
+                {
+                    CurrentProfile.ProfileImage = photoRequest.Result.Path;
+                }
+            }
+        }
+
+        private async void TakePhotoAsync()
+        {
+            var cameraPermissionRequest = await _permissionService.RequestCameraPermission();
+            var storagePermissionRequest = await _permissionService.RequestStoragePermission();
+
+            var isPermissionsGranted = cameraPermissionRequest.IsSuccess && cameraPermissionRequest.Result
+                                       && storagePermissionRequest.IsSuccess && storagePermissionRequest.Result;
+
+            if (isPermissionsGranted)
+            {
+                var photoRequest = await _photoService.TakePhotoAsync();
+
+                if (photoRequest.IsSuccess)
+                {
+                    CurrentProfile.ProfileImage = photoRequest.Result.Path;
+                }
+            }
         }
 
         private void OnCurrenProfilePropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
@@ -83,24 +164,21 @@ namespace ProfileBook_Native.Core.ViewModels.AddEditProfile
             }
         }
 
-        public override void Prepare(ProfileBindableModel parameter)
-        {
-            Title = Strings.EditProfile;
-            CurrentProfile = parameter;
-            CanExecute = !string.IsNullOrWhiteSpace(CurrentProfile?.NickName) && !string.IsNullOrWhiteSpace(CurrentProfile?.Name);
-        }
-
-        #endregion
-
-        #region -- Private helpers --
-
         private async void OnSaveButtonTappedCommandAsync()
         {
-            CurrentProfile.Date = System.DateTime.Now;
+            if (!_isEditMode)
+            {
+                CurrentProfile.Date = DateTime.Now;
+            }
 
             var profileModel = await _mapperService.MapAsync<ProfileModel>(CurrentProfile);
 
-            CurrentProfile.Id = await _profileService.SaveOrUpdateProfileAsync(profileModel);
+            var saveRequest= await _profileService.SaveOrUpdateProfileAsync(profileModel);
+
+            if (saveRequest.IsSuccess)
+            {
+                CurrentProfile.Id = saveRequest.Result;
+            }
 
             await NavigationService.Close(this, CurrentProfile);
         }

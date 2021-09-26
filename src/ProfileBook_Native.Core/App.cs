@@ -4,11 +4,13 @@ using MvvmCross;
 using MvvmCross.IoC;
 using MvvmCross.Navigation;
 using MvvmCross.ViewModels;
+using Plugin.Media;
+using Plugin.Permissions;
 using Plugin.Settings;
-using ProfileBook_Native.Core.Services.Settings;
 using ProfileBook_Native.Core.Services.User;
 using ProfileBook_Native.Core.ViewModels.MainList;
 using ProfileBook_Native.Core.ViewModels.SignIn;
+using Xamarin.Essentials;
 
 namespace ProfileBook_Native.Core
 {
@@ -23,6 +25,12 @@ namespace ProfileBook_Native.Core
 
             Mvx.IoCProvider.RegisterSingleton(UserDialogs.Instance);
             Mvx.IoCProvider.RegisterSingleton(CrossSettings.Current);
+
+            MainThread.BeginInvokeOnMainThread(() =>
+            {
+                Mvx.IoCProvider.RegisterSingleton(CrossMedia.Current);
+                Mvx.IoCProvider.RegisterSingleton(CrossPermissions.Current);
+            });
 
             RegisterCustomAppStart<AppStart>();
         }

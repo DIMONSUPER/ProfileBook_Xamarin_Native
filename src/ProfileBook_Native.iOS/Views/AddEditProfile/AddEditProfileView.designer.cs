@@ -13,6 +13,9 @@ namespace ProfileBook_Native.iOS.Views.AddEditProfile
 	partial class AddEditProfileView
 	{
 		[Outlet]
+		UIKit.UILabel DescriptionPlaceholderLabel { get; set; }
+
+		[Outlet]
 		UIKit.UITextView DescriptionTextView { get; set; }
 
 		[Outlet]
@@ -22,18 +25,13 @@ namespace ProfileBook_Native.iOS.Views.AddEditProfile
 		UIKit.UITextField NicknameLabel { get; set; }
 
 		[Outlet]
-		UIKit.UIImageView ProfileImageView { get; set; }
+		UIKit.UIButton ProfileImageButton { get; set; }
 		
 		void ReleaseDesignerOutlets ()
 		{
-			if (ProfileImageView != null) {
-				ProfileImageView.Dispose ();
-				ProfileImageView = null;
-			}
-
-			if (NicknameLabel != null) {
-				NicknameLabel.Dispose ();
-				NicknameLabel = null;
+			if (DescriptionTextView != null) {
+				DescriptionTextView.Dispose ();
+				DescriptionTextView = null;
 			}
 
 			if (NameLabel != null) {
@@ -41,9 +39,19 @@ namespace ProfileBook_Native.iOS.Views.AddEditProfile
 				NameLabel = null;
 			}
 
-			if (DescriptionTextView != null) {
-				DescriptionTextView.Dispose ();
-				DescriptionTextView = null;
+			if (NicknameLabel != null) {
+				NicknameLabel.Dispose ();
+				NicknameLabel = null;
+			}
+
+			if (ProfileImageButton != null) {
+				ProfileImageButton.Dispose ();
+				ProfileImageButton = null;
+			}
+
+			if (DescriptionPlaceholderLabel != null) {
+				DescriptionPlaceholderLabel.Dispose ();
+				DescriptionPlaceholderLabel = null;
 			}
 		}
 	}

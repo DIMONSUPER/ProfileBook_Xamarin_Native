@@ -58,8 +58,7 @@ namespace ProfileBook_Native.iOS.Views.MainList
 
         private void SetBindings()
         {
-            this.CreateBinding(ImageView)
-            .For(x => x.Image)
+            this.CreateBinding(ProfileImageView)
             .To<ProfileBindableModel>(vm => vm.ProfileImage)
             .WithConversion(new StringToImageConverter(), null)
             .Apply();

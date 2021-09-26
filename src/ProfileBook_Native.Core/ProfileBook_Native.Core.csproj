@@ -19,6 +19,9 @@
     <PackageReference Include="SQLiteNetExtensions.Async" Version="2.1.0" />
     <PackageReference Include="Xam.Plugins.Settings" Version="3.1.1" />
     <PackageReference Include="AutoMapper" Version="10.1.1" />
+    <PackageReference Include="MvvmCross.Plugin.PictureChooser" Version="8.0.2" />
+    <PackageReference Include="Xam.Plugin.Media" Version="5.0.1" />
+    <PackageReference Include="Plugin.Permissions" Version="6.0.1" />
   </ItemGroup>
   <ItemGroup>
     <None Remove="ViewModels\SignInViewModel\" />
@@ -40,6 +43,12 @@
     <None Remove="ViewModels\Settings\" />
     <None Remove="Services\MapperService\" />
     <None Remove="AutoMapper" />
+    <None Remove="MvvmCross.Plugin.PictureChooser" />
+    <None Remove="Xam.Plugin.Media" />
+    <None Remove="Services\Photo\" />
+    <None Remove="Helpers\" />
+    <None Remove="Plugin.Permissions" />
+    <None Remove="Services\Permissions\" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="ViewModels\SignIn\" />
@@ -56,6 +65,9 @@
     <Folder Include="ViewModels\AddEditProfile\" />
     <Folder Include="ViewModels\Settings\" />
     <Folder Include="Services\MapperService\" />
+    <Folder Include="Services\Photo\" />
+    <Folder Include="Helpers\" />
+    <Folder Include="Services\Permission\" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Update="Resources\Strings\Strings.resx">

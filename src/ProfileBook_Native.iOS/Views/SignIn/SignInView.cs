@@ -32,6 +32,7 @@ namespace ProfileBook_Native.iOS.Views.SignIn
             this.CreateBinding(SignInButton).To<SignInViewModel>(vm => vm.SignInButtonTappedCommand).Apply();
             this.CreateBinding(SignUpButton).To<SignInViewModel>(vm => vm.SignUpButtonTappedCommand).Apply();
             this.CreateBinding(RememberMeSwitch).To<SignInViewModel>(vm => vm.IsRememberMe).Apply();
+            
         }
 
         private void SetLocalizableStrings()
