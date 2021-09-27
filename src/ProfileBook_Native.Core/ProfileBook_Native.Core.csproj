@@ -22,6 +22,7 @@
     <PackageReference Include="MvvmCross.Plugin.PictureChooser" Version="8.0.2" />
     <PackageReference Include="Xam.Plugin.Media" Version="5.0.1" />
     <PackageReference Include="Plugin.Permissions" Version="6.0.1" />
+    <PackageReference Include="Microsoft.Extensions.Logging" Version="5.0.0" />
   </ItemGroup>
   <ItemGroup>
     <None Remove="ViewModels\SignInViewModel\" />
@@ -49,6 +50,7 @@
     <None Remove="Helpers\" />
     <None Remove="Plugin.Permissions" />
     <None Remove="Services\Permissions\" />
+    <None Remove="Microsoft.Extensions.Logging" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="ViewModels\SignIn\" />

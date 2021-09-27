@@ -1,8 +1,6 @@
 using CoreGraphics;
 using Foundation;
 using MvvmCross.Binding.BindingContext;
-using MvvmCross.Platforms.Ios.Views;
-using ProfileBook_Native.Core.Models;
 using ProfileBook_Native.Core.Resources.Strings;
 using ProfileBook_Native.Core.ViewModels.AddEditProfile;
 using ProfileBook_Native.iOS.Converters;
@@ -10,12 +8,8 @@ using UIKit;
 
 namespace ProfileBook_Native.iOS.Views.AddEditProfile
 {
-    public partial class AddEditProfileView : MvxViewController<AddEditProfileViewModel>
+    public partial class AddEditProfileView : BaseViewController<AddEditProfileViewModel>
     {
-        public AddEditProfileView() : base(nameof(AddEditProfileView), null)
-        {
-        }
-
         #region -- Overrides --
 
         public override void ViewDidLoad()

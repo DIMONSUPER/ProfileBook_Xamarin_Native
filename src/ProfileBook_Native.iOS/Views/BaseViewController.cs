@@ -9,6 +9,8 @@ namespace ProfileBook_Native.iOS.Views
     public abstract class BaseViewController<TViewModel> : MvxViewController<TViewModel>
         where TViewModel : class, IMvxViewModel
     {
+        private UITapGestureRecognizer _tapGesture;
+
         public override void ViewDidLoad()
         {
             base.ViewDidLoad();
@@ -32,7 +34,16 @@ namespace ProfileBook_Native.iOS.Views
             LayoutView();
 
             BindView();
+
+            _tapGesture = new UITapGestureRecognizer(() => View.EndEditing(true))
+            {
+                CancelsTouchesInView = false
+            };
+
+            View.AddGestureRecognizer(_tapGesture);
         }
+
+        #region -- Overrides --
 
         public override void ViewWillAppear(bool animated)
         {
@@ -40,6 +51,17 @@ namespace ProfileBook_Native.iOS.Views
 
             View.SubviewsDoNotTranslateAutoresizingMaskIntoConstraints();
         }
+
+        protected override void Dispose(bool disposing)
+        {
+            View.RemoveGestureRecognizer(_tapGesture);
+
+            base.Dispose(disposing);
+        }
+
+        #endregion
+
+        #region -- Protected virtual helpers --
 
         protected virtual void CreateView()
         {
@@ -52,5 +74,7 @@ namespace ProfileBook_Native.iOS.Views
         protected virtual void BindView()
         {
         }
+
+        #endregion
     }
 }

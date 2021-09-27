@@ -11,29 +11,30 @@ namespace ProfileBook_Native.iOS.Views.SignIn
     {
         #region -- Overrides --
 
-        public override void ViewDidLoad()
+        protected override void CreateView()
         {
-            base.ViewDidLoad();
+            base.LayoutView();
+
             NavigationItem.HidesBackButton = true;
             SetLocalizableStrings();
             SetSignInButtonStyle();
             SetRememberMeSwitchStyle();
-            SetBindings();
         }
 
-        #endregion
-
-        #region -- Private helpers --
-
-        private void SetBindings()
+        protected override void BindView()
         {
+            base.BindView();
+
             this.CreateBinding(LoginTextField).To<SignInViewModel>(vm => vm.Login).Apply();
             this.CreateBinding(PasswordTextField).To<SignInViewModel>(vm => vm.Password).Apply();
             this.CreateBinding(SignInButton).To<SignInViewModel>(vm => vm.SignInButtonTappedCommand).Apply();
             this.CreateBinding(SignUpButton).To<SignInViewModel>(vm => vm.SignUpButtonTappedCommand).Apply();
             this.CreateBinding(RememberMeSwitch).To<SignInViewModel>(vm => vm.IsRememberMe).Apply();
-            
         }
+
+        #endregion
+
+        #region -- Private helpers --
 
         private void SetLocalizableStrings()
         {
