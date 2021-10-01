@@ -37,10 +37,16 @@ namespace ProfileBook_Native.Core.Services.Settings
             set => _settings.AddOrUpdateValue(nameof(Language), value);
         }
 
-        public int UserId
+        public int CurrentUserId
         {
-            get => _settings.GetValueOrDefault(nameof(UserId), -1);
-            set => _settings.AddOrUpdateValue(nameof(UserId), value);
+            get => _settings.GetValueOrDefault(nameof(CurrentUserId), -1);
+            set => _settings.AddOrUpdateValue(nameof(CurrentUserId), value);
+        }
+
+        public int SortOption
+        {
+            get => _settings.GetValueOrDefault(nameof(SortOption), 0);
+            set => _settings.AddOrUpdateValue(nameof(SortOption), value);
         }
 
         #endregion

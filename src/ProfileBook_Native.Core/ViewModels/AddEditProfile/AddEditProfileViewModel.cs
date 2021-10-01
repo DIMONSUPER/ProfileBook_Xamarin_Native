@@ -1,4 +1,5 @@
 using System;
+using System.IO;
 using System.Threading.Tasks;
 using Acr.UserDialogs;
 using MvvmCross.Commands;
@@ -75,6 +76,13 @@ namespace ProfileBook_Native.Core.ViewModels.AddEditProfile
 
         #region -- Overrides --
 
+        public override void ViewCreated()
+        {
+            base.ViewCreated();
+
+            CurrentProfile.PropertyChanged += OnCurrenProfilePropertyChanged;
+        }
+
         public override Task Initialize()
         {
             Title = _isEditMode ? Strings.EditProfile : Strings.AddProfile;
@@ -83,11 +91,9 @@ namespace ProfileBook_Native.Core.ViewModels.AddEditProfile
             {
                 CurrentProfile = new ProfileBindableModel
                 {
-                    UserId = _userService.UserId,
+                    UserId = _userService.CurrentUserId,
                 };
             }
-
-            CurrentProfile.PropertyChanged += OnCurrenProfilePropertyChanged;
 
             return Task.CompletedTask;
         }
@@ -101,7 +107,10 @@ namespace ProfileBook_Native.Core.ViewModels.AddEditProfile
 
         public override void ViewDestroy(bool viewFinishing = true)
         {
-            CurrentProfile.PropertyChanged -= OnCurrenProfilePropertyChanged;
+            if (viewFinishing)
+            {
+                CurrentProfile.PropertyChanged -= OnCurrenProfilePropertyChanged;
+            }
 
             base.ViewDestroy(viewFinishing);
         }
@@ -132,7 +141,12 @@ namespace ProfileBook_Native.Core.ViewModels.AddEditProfile
 
                 if (photoRequest.IsSuccess)
                 {
-                    CurrentProfile.ProfileImage = photoRequest.Result.Path;
+                    using var stream = photoRequest.Result.GetStream();
+                    using var memoryStream = new MemoryStream();
+
+                    await stream.CopyToAsync(memoryStream);
+
+                    CurrentProfile.ProfileImage = memoryStream.ToArray();
                 }
             }
         }
@@ -151,7 +165,12 @@ namespace ProfileBook_Native.Core.ViewModels.AddEditProfile
 
                 if (photoRequest.IsSuccess)
                 {
-                    CurrentProfile.ProfileImage = photoRequest.Result.Path;
+                    using var stream = photoRequest.Result.GetStream();
+                    using var memoryStream = new MemoryStream();
+
+                    await stream.CopyToAsync(memoryStream);
+
+                    CurrentProfile.ProfileImage = memoryStream.ToArray();
                 }
             }
         }

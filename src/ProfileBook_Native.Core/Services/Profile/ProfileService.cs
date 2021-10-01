@@ -23,6 +23,9 @@ namespace ProfileBook_Native.Core.Services.Profile
         public Task<AOResult<int>> SaveOrUpdateProfileAsync(ProfileModel profileModel) =>
             AOResult.ExecuteTaskAsync(_ => _repositoryService.SaveOrUpdateAsync(profileModel));
 
+        public Task<AOResult<int>> DeleteProfileAsync(ProfileModel profileModel) =>
+            AOResult.ExecuteTaskAsync(_ => _repositoryService.DeleteAsync(profileModel));
+
         #endregion
     }
 }

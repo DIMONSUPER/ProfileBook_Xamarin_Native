@@ -79,7 +79,7 @@ namespace ProfileBook_Native.Core.ViewModels.SignIn
             {
                 _userService.IsRememberMe = IsRememberMe;
                 _userService.IsAuthCompleted = true;
-                _userService.UserId = users.FirstOrDefault(x => x.Login == Login).Id;
+                _userService.CurrentUserId = users.FirstOrDefault(x => x.Login == Login).Id;
                 await NavigationService.Navigate<MainListViewModel>();
             }
             else

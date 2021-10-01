@@ -60,7 +60,7 @@ namespace ProfileBook_Native.iOS.Views.MainList
         {
             this.CreateBinding(ProfileImageView)
             .To<ProfileBindableModel>(vm => vm.ProfileImage)
-            .WithConversion(new StringToImageConverter(), null)
+            .WithConversion(new BytesToImageConverter(), null)
             .Apply();
 
             this.CreateBinding().For(x => x.SelectedCommand).To<ProfileBindableModel>(vm => vm.TapCommad).Apply();

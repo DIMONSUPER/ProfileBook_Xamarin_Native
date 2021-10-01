@@ -1,14 +1,19 @@
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using Acr.UserDialogs;
 using MvvmCross.Commands;
 using MvvmCross.Navigation;
+using ProfileBook_Native.Core.Enums;
 using ProfileBook_Native.Core.Models;
+using ProfileBook_Native.Core.Resources.Strings;
 using ProfileBook_Native.Core.Services.MapperService;
 using ProfileBook_Native.Core.Services.Profile;
 using ProfileBook_Native.Core.Services.User;
 using ProfileBook_Native.Core.ViewModels.AddEditProfile;
+using ProfileBook_Native.Core.ViewModels.Settings;
 using ProfileBook_Native.Core.ViewModels.SignIn;
 
 namespace ProfileBook_Native.Core.ViewModels.MainList
@@ -18,17 +23,20 @@ namespace ProfileBook_Native.Core.ViewModels.MainList
         private readonly IProfileService _profileService;
         private readonly IUserService _userService;
         private readonly IMapperService _mapperService;
+        private readonly IUserDialogs _userDialogs;
 
         public MainListViewModel(
             IMvxNavigationService navigationService,
             IProfileService profileService,
             IUserService userService,
-            IMapperService mapperService)
+            IMapperService mapperService,
+            IUserDialogs userDialogs)
             : base(navigationService)
         {
             _profileService = profileService;
             _userService = userService;
             _mapperService = mapperService;
+            _userDialogs = userDialogs;
 
             Profiles = new();
         }
@@ -53,10 +61,7 @@ namespace ProfileBook_Native.Core.ViewModels.MainList
         public ICommand LogOutButtonTappedCommand => _logOutButtonTappedCommand ??= new MvxCommand(OnLogOutButtonTappedCommandAsync);
 
         private ICommand _settingsButtonTappedCommand;
-        public ICommand SettingsButtonTappedCommand => _settingsButtonTappedCommand ??= new MvxCommand(OnSettingsButtonTappedCommand);
-
-        private ICommand _editButtonTappedCommand;
-        public ICommand EditButtonTappedCommand => _editButtonTappedCommand ??= new MvxCommand<ProfileBindableModel>(OnEditButtonTappedCommand);
+        public ICommand SettingsButtonTappedCommand => _settingsButtonTappedCommand ??= new MvxCommand(OnSettingsButtonTappedCommandAsync);
 
         private ICommand _deleteButtonTappedCommand;
         public ICommand DeleteButtonTappedCommand => _deleteButtonTappedCommand ??= new MvxCommand<ProfileBindableModel>(OnDeleteButtonTappedCommandAsync);
@@ -94,32 +99,47 @@ namespace ProfileBook_Native.Core.ViewModels.MainList
 
         private async void OnLogOutButtonTappedCommandAsync()
         {
-            _userService.IsRememberMe = false;
-            _userService.IsAuthCompleted = false;
-            _userService.UserId = -1;
+            _userService.IsRememberMe = _userService.IsAuthCompleted = false;
+            _userService.CurrentUserId = -1;
 
             await Task.WhenAll(NavigationService.Navigate<SignInViewModel>(), NavigationService.Close(this));
         }
 
-        private void OnSettingsButtonTappedCommand()
-        { }
+        private async void OnSettingsButtonTappedCommandAsync()
+        {
+            await NavigationService.Navigate(typeof(SettingsViewModel));
+        }
 
-        private void OnEditButtonTappedCommand(ProfileBindableModel profile)
-        { }
-
-        private void OnDeleteButtonTappedCommandAsync(ProfileBindableModel profile)
+        private async void OnDeleteButtonTappedCommandAsync(ProfileBindableModel profile)
         {
             HasProfiles = Profiles.Any();
+
+            var isConfirmed = await _userDialogs.ConfirmAsync(
+                Strings.AreYouSureYouWantToDelete,
+                okText: Strings.Yes,
+                cancelText: Strings.No);
+
+            if (isConfirmed)
+            {
+
+            }
         }
 
         private async void OnProfileTappedCommandAsync(ProfileBindableModel profile)
         {
             var editedProfile = await NavigationService.Navigate<ProfileBindableModel, ProfileBindableModel>(typeof(AddEditProfileViewModel), profile);
 
-            if (editedProfile != null)
+            if (editedProfile is not null)
             {
                 await UpdateProfilesAsync();
             }
+        }
+
+        private async Task DeleteProfileAsync(ProfileBindableModel profileBindableModel)
+        {
+            var profileModel = await _mapperService.MapAsync<ProfileModel>(profileBindableModel);
+
+            _ = await _profileService.DeleteProfileAsync(profileModel);
         }
 
         private async Task UpdateProfilesAsync()
@@ -131,14 +151,28 @@ namespace ProfileBook_Native.Core.ViewModels.MainList
                 var profileBindableModels = await _mapperService.MapRangeAsync<ProfileModel, ProfileBindableModel>(profilesRequest.Result, (m, vm) =>
                 {
                     vm.TapCommad = ProfileTappedCommand;
-                    vm.EditCommad = EditButtonTappedCommand;
                     vm.DeleteCommand = DeleteButtonTappedCommand;
                 });
 
-                Profiles = new(profileBindableModels.Where(x => x.UserId == _userService.UserId));
+                var sortedProfiles = GetSortedProfiles(profileBindableModels.Where(x => x.UserId == _userService.CurrentUserId));
+
+                Profiles = new(sortedProfiles);
 
                 HasProfiles = Profiles.Any();
             }
+        }
+
+        private IEnumerable<ProfileBindableModel> GetSortedProfiles(IEnumerable<ProfileBindableModel> profiles)
+        {
+            var result = (ESortOptions)_userService.SortOption switch
+            {
+                ESortOptions.ByDate => profiles.OrderBy(x => x.Date),
+                ESortOptions.ByName => profiles.OrderBy(x => x.Name),
+                ESortOptions.ByNickname => profiles.OrderBy(x => x.NickName),
+                _ => throw new System.NotImplementedException(),
+            };
+
+            return result;
         }
 
         #endregion

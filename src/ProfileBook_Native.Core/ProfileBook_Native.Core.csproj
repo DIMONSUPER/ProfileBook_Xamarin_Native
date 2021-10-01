@@ -51,6 +51,9 @@
     <None Remove="Plugin.Permissions" />
     <None Remove="Services\Permissions\" />
     <None Remove="Microsoft.Extensions.Logging" />
+    <None Remove="Enums\" />
+    <None Remove="System.Drawing.Common" />
+    <None Remove="Aspose.Imaging" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="ViewModels\SignIn\" />
@@ -70,6 +73,7 @@
     <Folder Include="Services\Photo\" />
     <Folder Include="Helpers\" />
     <Folder Include="Services\Permission\" />
+    <Folder Include="Enums\" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Update="Resources\Strings\Strings.resx">

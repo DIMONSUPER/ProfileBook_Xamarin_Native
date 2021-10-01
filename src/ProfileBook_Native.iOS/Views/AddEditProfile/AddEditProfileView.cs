@@ -10,35 +10,15 @@ namespace ProfileBook_Native.iOS.Views.AddEditProfile
 {
     public partial class AddEditProfileView : BaseViewController<AddEditProfileViewModel>
     {
-        #region -- Overrides --
+        private readonly NSObject _observer;
 
-        public override void ViewDidLoad()
+        public AddEditProfileView()
         {
-            base.ViewDidLoad();
-
-            CreateToolBar();
-            SetStyles();
-            SetTranslations();
-            CreateObserver();
-            SetBindings();
+            _observer = UITextView.Notifications.ObserveTextDidChange((sender, args) =>
+            DescriptionPlaceholderLabel.Hidden = !string.IsNullOrEmpty(DescriptionTextView.Text));
         }
 
-        #endregion
-
-        #region -- Private helpers --
-
-        private void CreateObserver()
-        {
-            var observer = NSNotificationCenter.DefaultCenter.AddObserver(UITextView.TextDidChangeNotification,
-                notification => DescriptionPlaceholderLabel.Hidden = !string.IsNullOrEmpty(DescriptionTextView.Text));
-        }
-
-        private void SetTranslations()
-        {
-            NicknameLabel.Placeholder = Strings.NickName;
-            NameLabel.Placeholder = Strings.Name;
-            DescriptionPlaceholderLabel.Text = Strings.Description;
-        }
+        #region -- Public properties --
 
         public UIImage ProfileImage
         {
@@ -46,21 +26,57 @@ namespace ProfileBook_Native.iOS.Views.AddEditProfile
             set => ProfileImageButton.SetImage(value, UIControlState.Normal);
         }
 
-        private void SetBindings()
+        #endregion
+
+        #region -- Overrides --
+
+        protected override void Dispose(bool disposing)
         {
-            this.CreateBinding().For(x => x.Title).To<AddEditProfileViewModel>(vm => vm.Title).Apply();
+            if (disposing)
+            {
+                _observer.Dispose();
+            }
 
-            this.CreateBinding()
-            .For(x => x.ProfileImage)
-            .To<AddEditProfileViewModel>(vm => vm.CurrentProfile.ProfileImage)
-            .WithConversion(new StringToImageConverter(), new CGSize(135, 150))
-            .Apply();
+            base.Dispose(disposing);
+        }
 
-            this.CreateBinding(ProfileImageButton).To<AddEditProfileViewModel>(vm => vm.ProfileImageTappedCommand).Apply();
+        public override void ViewDidLoad()
+        {
+            base.ViewDidLoad();
 
-            this.CreateBinding(NicknameLabel).To<AddEditProfileViewModel>(vm => vm.CurrentProfile.NickName).Apply();
-            this.CreateBinding(NameLabel).To<AddEditProfileViewModel>(vm => vm.CurrentProfile.Name).Apply();
-            this.CreateBinding(DescriptionTextView).To<AddEditProfileViewModel>(vm => vm.CurrentProfile.Description).Apply();
+            SetStyles();
+            SetTranslations();
+            CreateToolBar();
+        }
+
+        protected override void BindView()
+        {
+            base.BindView();
+
+            var set = this.CreateBindingSet<AddEditProfileView, AddEditProfileViewModel>();
+
+            set.Bind().For(x => x.ProfileImage).To(vm => vm.CurrentProfile.ProfileImage).WithConversion(new BytesToImageConverter());
+            set.Bind().For(x => x.Title).To(vm => vm.Title);
+            set.Bind(ProfileImageButton).To(vm => vm.ProfileImageTappedCommand);
+            set.Bind(NicknameLabel).To(vm => vm.CurrentProfile.NickName);
+            set.Bind(NameLabel).To(vm => vm.CurrentProfile.Name);
+            set.Bind(DescriptionTextView).To(vm => vm.CurrentProfile.Description);
+
+
+            set.Apply();
+
+            DescriptionPlaceholderLabel.Hidden = !string.IsNullOrEmpty(DescriptionTextView.Text);
+        }
+
+        #endregion
+
+        #region -- Private helpers --
+
+        private void SetTranslations()
+        {
+            NicknameLabel.Placeholder = Strings.NickName;
+            NameLabel.Placeholder = Strings.Name;
+            DescriptionPlaceholderLabel.Text = Strings.Description;
         }
 
         private void CreateToolBar()

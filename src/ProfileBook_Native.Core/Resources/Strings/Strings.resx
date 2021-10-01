@@ -117,4 +117,13 @@
   <data name="Cancel" xml:space="preserve">
         <value>Cancel</value>
   </data>
+  <data name="AreYouSureYouWantToDelete" xml:space="preserve">
+        <value>Are you sure you want to delete this profile?</value>
+  </data>
+  <data name="Yes" xml:space="preserve">
+        <value>Yes</value>
+  </data>
+  <data name="No" xml:space="preserve">
+        <value>No</value>
+  </data>
 </root>

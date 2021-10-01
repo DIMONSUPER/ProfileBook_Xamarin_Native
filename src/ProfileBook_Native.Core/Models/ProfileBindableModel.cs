@@ -1,6 +1,5 @@
 using System;
 using System.Windows.Input;
-using MvvmCross.Commands;
 using MvvmCross.ViewModels;
 
 namespace ProfileBook_Native.Core.Models
@@ -30,8 +29,8 @@ namespace ProfileBook_Native.Core.Models
             set => SetProperty(ref _description, value);
         }
 
-        private string _profileImage;
-        public string ProfileImage
+        private byte[] _profileImage;
+        public byte[] ProfileImage
         {
             get => _profileImage;
             set => SetProperty(ref _profileImage, value);
@@ -63,13 +62,6 @@ namespace ProfileBook_Native.Core.Models
         {
             get => _tapCommad;
             set => SetProperty(ref _tapCommad, value);
-        }
-
-        private ICommand _editCommad;
-        public ICommand EditCommad
-        {
-            get => _editCommad;
-            set => SetProperty(ref _editCommad, value);
         }
 
         private ICommand _deleteCommad;

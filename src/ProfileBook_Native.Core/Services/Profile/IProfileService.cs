@@ -9,5 +9,6 @@ namespace ProfileBook_Native.Core.Services.Profile
     {
         Task<AOResult<IEnumerable<ProfileModel>>> GetAllProfilesAsync();
         Task<AOResult<int>> SaveOrUpdateProfileAsync(ProfileModel profileModel);
+        Task<AOResult<int>> DeleteProfileAsync(ProfileModel profileModel);
     }
 }

@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="18122" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="19162" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="18093"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19144"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -53,7 +53,7 @@
                             <textInputTraits key="textInputTraits"/>
                         </textField>
                         <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="7b5-ZG-P71">
-                            <rect key="frame" x="40" y="318" width="334" height="558"/>
+                            <rect key="frame" x="40" y="318" width="334" height="518"/>
                             <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                             <color key="textColor" systemColor="labelColor"/>
                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
@@ -69,7 +69,7 @@
                     <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     <constraints>
                         <constraint firstItem="FwY-SL-Tih" firstAttribute="top" secondItem="7XY-Bw-rZP" secondAttribute="top" constant="40" id="5gq-Sz-B19"/>
-                        <constraint firstAttribute="bottom" secondItem="7b5-ZG-P71" secondAttribute="bottom" constant="20" id="9Fd-Ds-r0C"/>
+                        <constraint firstAttribute="bottom" secondItem="7b5-ZG-P71" secondAttribute="bottom" constant="60" id="9Fd-Ds-r0C"/>
                         <constraint firstItem="Ixh-8f-6og" firstAttribute="leading" secondItem="7b5-ZG-P71" secondAttribute="leading" constant="5" id="9aw-If-NN1"/>
                         <constraint firstItem="7b5-ZG-P71" firstAttribute="leading" secondItem="7XY-Bw-rZP" secondAttribute="leading" constant="40" id="9bR-Pa-862"/>
                         <constraint firstItem="9HW-bX-Lf5" firstAttribute="leading" secondItem="7XY-Bw-rZP" secondAttribute="leading" constant="40" id="CZb-2k-MbC"/>

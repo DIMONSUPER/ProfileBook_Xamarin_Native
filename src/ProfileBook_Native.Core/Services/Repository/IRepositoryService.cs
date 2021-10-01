@@ -20,7 +20,7 @@ namespace ProfileBook_Native.Core.Services.Repository
         Task<IEnumerable<T>> FindWhereAsync<T>(Expression<Func<T, bool>> predicate)
             where T : class, IEntityBase, new();
 
-        Task DeleteAsync<T>(T entity)
+        Task<int> DeleteAsync<T>(T entity)
             where T : class, IEntityBase, new();
 
         Task DeleteWhereAsync<T>(Expression<Func<T, bool>> predicate)

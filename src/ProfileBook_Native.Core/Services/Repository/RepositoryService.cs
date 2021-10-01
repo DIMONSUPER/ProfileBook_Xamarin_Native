@@ -86,13 +86,17 @@ namespace ProfileBook_Native.Core.Services.Repository
             return row;
         }
 
-        public async Task DeleteAsync<T>(T entity)
+        public async Task<int> DeleteAsync<T>(T entity)
             where T : class, IEntityBase, new()
         {
+            int result = -1;
+
             if (entity is not null)
             {
-                await _database.Value.DeleteAsync(entity);
+                result = await _database.Value.DeleteAsync(entity);
             }
+
+            return result;
         }
 
         public async Task SaveOrUpdateRangeAsync<T>(IEnumerable<T> entities)

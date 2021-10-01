@@ -54,7 +54,10 @@ namespace ProfileBook_Native.iOS.Views
 
         protected override void Dispose(bool disposing)
         {
-            View.RemoveGestureRecognizer(_tapGesture);
+            if (disposing)
+            {
+                View.RemoveGestureRecognizer(_tapGesture);
+            }
 
             base.Dispose(disposing);
         }

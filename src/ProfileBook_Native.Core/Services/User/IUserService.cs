@@ -13,6 +13,7 @@ namespace ProfileBook_Native.Core.Services.User
         bool IsRememberMe { get; set; }
         bool IsDarkModeOn { get; set; }
         string Language { get; set; }
-        int UserId { get; set; }
+        int CurrentUserId { get; set; }
+        int SortOption { get; set; }
     }
 }

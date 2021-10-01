@@ -45,10 +45,16 @@ namespace ProfileBook_Native.Core.Services.User
             set => _settingsService.Language = value;
         }
 
-        public int UserId
+        public int CurrentUserId
         {
-            get => _settingsService.UserId;
-            set => _settingsService.UserId = value;
+            get => _settingsService.CurrentUserId;
+            set => _settingsService.CurrentUserId = value;
+        }
+
+        public int SortOption
+        {
+            get => _settingsService.SortOption;
+            set => _settingsService.SortOption = value;
         }
 
         public Task<IEnumerable<UserModel>> GetAllUsersAsync()

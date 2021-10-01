@@ -256,5 +256,23 @@ namespace ProfileBook_Native.Core.Resources.Strings {
                 return ResourceManager.GetString("Cancel", resourceCulture);
             }
         }
+        
+        public static string AreYouSureYouWantToDelete {
+            get {
+                return ResourceManager.GetString("AreYouSureYouWantToDelete", resourceCulture);
+            }
+        }
+        
+        public static string Yes {
+            get {
+                return ResourceManager.GetString("Yes", resourceCulture);
+            }
+        }
+        
+        public static string No {
+            get {
+                return ResourceManager.GetString("No", resourceCulture);
+            }
+        }
     }
 }
