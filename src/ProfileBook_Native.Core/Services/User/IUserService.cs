@@ -11,7 +11,7 @@ namespace ProfileBook_Native.Core.Services.User
         Task<UserModel> GetUserByIdAsync(int id);
         bool IsAuthCompleted { get; set; }
         bool IsRememberMe { get; set; }
-        bool IsDarkModeOn { get; set; }
+        int Theme { get; set; }
         string Language { get; set; }
         int CurrentUserId { get; set; }
         int SortOption { get; set; }

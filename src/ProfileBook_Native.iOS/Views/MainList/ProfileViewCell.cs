@@ -1,10 +1,7 @@
 using System;
-using System.Globalization;
 using System.Windows.Input;
-using CoreGraphics;
 using Foundation;
 using MvvmCross.Binding.BindingContext;
-using MvvmCross.Converters;
 using MvvmCross.Platforms.Ios.Binding.Views;
 using ProfileBook_Native.Core.Models;
 using ProfileBook_Native.iOS.Converters;
@@ -58,15 +55,15 @@ namespace ProfileBook_Native.iOS.Views.MainList
 
         private void SetBindings()
         {
-            this.CreateBinding(ProfileImageView)
-            .To<ProfileBindableModel>(vm => vm.ProfileImage)
-            .WithConversion(new BytesToImageConverter(), null)
-            .Apply();
+            var set = this.CreateBindingSet<ProfileViewCell, ProfileBindableModel>();
 
-            this.CreateBinding().For(x => x.SelectedCommand).To<ProfileBindableModel>(vm => vm.TapCommad).Apply();
-            this.CreateBinding(NameLabel).To<ProfileBindableModel>(vm => vm.Name).Apply();
-            this.CreateBinding(NicknameLabel).To<ProfileBindableModel>(vm => vm.NickName).Apply();
-            this.CreateBinding(DateLabel).To<ProfileBindableModel>(vm => vm.Date).Apply();
+            set.Bind(ProfileImageView).To(vm => vm.ProfileImage).WithConversion(new BytesToImageConverter());
+            set.Bind().For(x => x.SelectedCommand).To(vm => vm.TapCommad);
+            set.Bind(NameLabel).To(vm => vm.Name);
+            set.Bind(NicknameLabel).To(vm => vm.NickName);
+            set.Bind(DateLabel).To(vm => vm.Date);
+
+            set.Apply();
         }
 
         #endregion

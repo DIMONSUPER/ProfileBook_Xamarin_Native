@@ -1,0 +1,135 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="SignInPage" xml:space="preserve">
+        <value>Страница входа</value>
+  </data>
+	<data name="SignUpPage" xml:space="preserve">
+        <value>Страница регистрации</value>
+  </data>
+	<data name="Login" xml:space="preserve">
+        <value>Логин</value>
+  </data>
+	<data name="Password" xml:space="preserve">
+        <value>Пароль</value>
+  </data>
+	<data name="SignIn" xml:space="preserve">
+        <value>Вход</value>
+  </data>
+	<data name="SignUp" xml:space="preserve">
+        <value>Регистрация</value>
+  </data>
+	<data name="ConfirmPassword" xml:space="preserve">
+        <value>Подтверждение пароля</value>
+  </data>
+	<data name="LoginWarning1" xml:space="preserve">
+        <value>Логин должен содержать минимум 4 и не более 16 символов</value>
+  </data>
+	<data name="LoginWarning2" xml:space="preserve">
+        <value>Логин уже существует</value>
+  </data>
+	<data name="LoginWarning3" xml:space="preserve">
+        <value>Логин не должен начинаться с цифры</value>
+  </data>
+	<data name="PasswordWarning1" xml:space="preserve">
+        <value>Пароль должен содержать минимум 8 и не более 16 символов</value>
+  </data>
+	<data name="PasswordWarning2" xml:space="preserve">
+        <value>Пароль должен содержать хотя бы 1 букву верхнего регистра, маленького и цифру</value>
+  </data>
+	<data name="ConfirmPasswordWarning" xml:space="preserve">
+        <value>Пароли должны совпадать</value>
+  </data>
+	<data name="MainList" xml:space="preserve">
+        <value>Главный список</value>
+  </data>
+	<data name="LogOut" xml:space="preserve">
+        <value>Выход</value>
+  </data>
+	<data name="Settings" xml:space="preserve">
+        <value>Настройки</value>
+  </data>
+	<data name="Edit" xml:space="preserve">
+        <value>Редактировать</value>
+  </data>
+	<data name="Delete" xml:space="preserve">
+        <value>Удалить</value>
+  </data>
+	<data name="Back" xml:space="preserve">
+        <value>Назад</value>
+  </data>
+	<data name="NoProfiles" xml:space="preserve">
+        <value>Нет профилей</value>
+  </data>
+	<data name="NickName" xml:space="preserve">
+        <value>Никнейм</value>
+  </data>
+	<data name="Name" xml:space="preserve">
+        <value>Имя</value>
+  </data>
+	<data name="Description" xml:space="preserve">
+        <value>Описание</value>
+  </data>
+	<data name="AddProfile" xml:space="preserve">
+        <value>Добавление профиля</value>
+  </data>
+  <data name="EditProfile" xml:space="preserve">
+        <value>Редактирование профиля</value>
+  </data>
+	<data name="Save" xml:space="preserve">
+        <value>Сохранить</value>
+  </data>
+	<data name="PickFromGallery" xml:space="preserve">
+        <value>Выбрать из галереи</value>
+  </data>
+	<data name="TakeAPhoto" xml:space="preserve">
+        <value>Сделать снимок</value>
+  </data>
+	<data name="SortBy" xml:space="preserve">
+        <value>Сортировать по:</value>
+  </data>
+	<data name="Date" xml:space="preserve">
+        <value>Дата</value>
+  </data>
+	<data name="Dark" xml:space="preserve">
+        <value>Темная</value>
+  </data>
+  <data name="Light" xml:space="preserve">
+        <value>Светлая</value>
+  </data>
+  <data name="Theme" xml:space="preserve">
+        <value>Тема:</value>
+  </data>
+	<data name="ChooseLanguage" xml:space="preserve">
+        <value>Выбрать язык</value>
+  </data>
+  <data name="RememberMe" xml:space="preserve">
+        <value>Запомнить меня</value>
+  </data>
+  <data name="InvalidLoginOrPassword" xml:space="preserve">
+        <value>Неверный логин или пароль!</value>
+  </data>
+  <data name="Cancel" xml:space="preserve">
+        <value>Отменить</value>
+  </data>
+  <data name="AreYouSureYouWantToDelete" xml:space="preserve">
+        <value>Вы уверены что хотите удалить этот профиль?</value>
+  </data>
+  <data name="Yes" xml:space="preserve">
+        <value>Да</value>
+  </data>
+  <data name="No" xml:space="preserve">
+        <value>Нет</value>
+  </data>
+</root>

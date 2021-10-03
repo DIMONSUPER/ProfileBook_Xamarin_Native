@@ -2,8 +2,10 @@ using System.Linq;
 using Acr.UserDialogs;
 using MvvmCross.Commands;
 using MvvmCross.Navigation;
+using ProfileBook_Native.Core.Enums;
 using ProfileBook_Native.Core.Models;
 using ProfileBook_Native.Core.Resources.Strings;
+using ProfileBook_Native.Core.Services.Theme;
 using ProfileBook_Native.Core.Services.User;
 using ProfileBook_Native.Core.ViewModels.MainList;
 using ProfileBook_Native.Core.ViewModels.SignUp;
@@ -14,15 +16,18 @@ namespace ProfileBook_Native.Core.ViewModels.SignIn
     {
         private readonly IUserService _userService;
         private readonly IUserDialogs _userDialogs;
+        private readonly IThemeService _themeService;
 
         public SignInViewModel(
             IMvxNavigationService navigationService,
             IUserService userService,
-            IUserDialogs userDialogs)
+            IUserDialogs userDialogs,
+            IThemeService themeService)
             : base(navigationService)
         {
             _userService = userService;
             _userDialogs = userDialogs;
+            _themeService = themeService;
         }
 
         #region -- Public properties --
@@ -61,6 +66,17 @@ namespace ProfileBook_Native.Core.ViewModels.SignIn
 
         private IMvxCommand _signUpButtonTappedCommand;
         public IMvxCommand SignUpButtonTappedCommand => _signUpButtonTappedCommand ??= new MvxCommand(OnSignUpButtonTappedCommandAsync);
+
+        #endregion
+
+        #region -- Overrides --
+
+        public override void ViewCreated()
+        {
+            base.ViewCreated();
+
+            _themeService.ChangeThemeTo((ETheme)_userService.Theme);
+        }
 
         #endregion
 

@@ -16,21 +16,32 @@ namespace ProfileBook_Native.iOS.Views.MainList
             NavigationItem.HidesBackButton = true;
             CreateToolBar();
             SetAddButtonStyle();
-            SetLocalizableStrings();
-            SetBindings();
+        }
+
+        protected override void BindView()
+        {
+            base.BindView();
+
+            var set = this.CreateBindingSet<MainListView, MainListViewModel>();
+
+            set.Bind(ProfilesEmptyLabel).For(x => x.Hidden).To(vm => vm.HasProfiles);
+            set.Bind(AddButton).To(vm => vm.AddButtonTappedCommand);
+            set.Apply();
+
+            BindTableView();
+        }
+
+        public override void SetLocalizableStrings()
+        {
+            base.SetLocalizableStrings();
+
+            Title = Strings.MainList;
+            ProfilesEmptyLabel.Text = Strings.NoProfiles;
         }
 
         #endregion
 
         #region -- Private helpers --
-
-        private void SetBindings()
-        {
-            this.CreateBinding(ProfilesEmptyLabel).For(x => x.Hidden).To<MainListViewModel>(vm => vm.HasProfiles).Apply();
-            this.CreateBinding(AddButton).To<MainListViewModel>(vm => vm.AddButtonTappedCommand).Apply();
-            
-            BindCollectionView();
-        }
 
         private void SetAddButtonStyle()
         {
@@ -63,19 +74,14 @@ namespace ProfileBook_Native.iOS.Views.MainList
             NavigationItem.SetRightBarButtonItems(items, false);
         }
 
-        private void SetLocalizableStrings()
-        {
-            Title = Strings.MainList;
-            ProfilesEmptyLabel.Text = Strings.NoProfiles;
-        }
-
-        private void BindCollectionView()
+        private void BindTableView()
         {
             ProfilesTableView.SeparatorColor = UIColor.Clear;
             ProfilesTableView.RegisterNibForCellReuse(ProfileViewCell.Nib, ProfileViewCell.Key);
             var source = new ProfileTableViewSource(ProfilesTableView);
             ProfilesTableView.Source = source;
-            this.CreateBinding(source).To<MainListViewModel>(vm => vm.Profiles).Apply();
+            this.CreateBinding(source).For(x => x.Items).To<MainListViewModel>(vm => vm.Profiles).Apply();
+            this.CreateBinding(source).For(x => x.ItemDeletedCommand).To<MainListViewModel>(vm => vm.DeleteButtonTappedCommand).Apply();
         }
 
         #endregion

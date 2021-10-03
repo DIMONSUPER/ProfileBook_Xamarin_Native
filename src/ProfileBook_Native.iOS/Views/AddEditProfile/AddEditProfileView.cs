@@ -45,8 +45,16 @@ namespace ProfileBook_Native.iOS.Views.AddEditProfile
             base.ViewDidLoad();
 
             SetStyles();
-            SetTranslations();
             CreateToolBar();
+        }
+
+        public override void SetLocalizableStrings()
+        {
+            base.SetLocalizableStrings();
+
+            NicknameLabel.Placeholder = Strings.NickName;
+            NameLabel.Placeholder = Strings.Name;
+            DescriptionPlaceholderLabel.Text = Strings.Description;
         }
 
         protected override void BindView()
@@ -62,7 +70,6 @@ namespace ProfileBook_Native.iOS.Views.AddEditProfile
             set.Bind(NameLabel).To(vm => vm.CurrentProfile.Name);
             set.Bind(DescriptionTextView).To(vm => vm.CurrentProfile.Description);
 
-
             set.Apply();
 
             DescriptionPlaceholderLabel.Hidden = !string.IsNullOrEmpty(DescriptionTextView.Text);
@@ -71,13 +78,6 @@ namespace ProfileBook_Native.iOS.Views.AddEditProfile
         #endregion
 
         #region -- Private helpers --
-
-        private void SetTranslations()
-        {
-            NicknameLabel.Placeholder = Strings.NickName;
-            NameLabel.Placeholder = Strings.Name;
-            DescriptionPlaceholderLabel.Text = Strings.Description;
-        }
 
         private void CreateToolBar()
         {

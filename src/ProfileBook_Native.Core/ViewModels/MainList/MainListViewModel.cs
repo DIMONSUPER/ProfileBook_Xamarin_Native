@@ -11,6 +11,7 @@ using ProfileBook_Native.Core.Models;
 using ProfileBook_Native.Core.Resources.Strings;
 using ProfileBook_Native.Core.Services.MapperService;
 using ProfileBook_Native.Core.Services.Profile;
+using ProfileBook_Native.Core.Services.Theme;
 using ProfileBook_Native.Core.Services.User;
 using ProfileBook_Native.Core.ViewModels.AddEditProfile;
 using ProfileBook_Native.Core.ViewModels.Settings;
@@ -24,19 +25,22 @@ namespace ProfileBook_Native.Core.ViewModels.MainList
         private readonly IUserService _userService;
         private readonly IMapperService _mapperService;
         private readonly IUserDialogs _userDialogs;
+        private readonly IThemeService _themeService;
 
         public MainListViewModel(
             IMvxNavigationService navigationService,
             IProfileService profileService,
             IUserService userService,
             IMapperService mapperService,
-            IUserDialogs userDialogs)
+            IUserDialogs userDialogs,
+            IThemeService themeService)
             : base(navigationService)
         {
             _profileService = profileService;
             _userService = userService;
             _mapperService = mapperService;
             _userDialogs = userDialogs;
+            _themeService = themeService;
 
             Profiles = new();
         }
@@ -76,6 +80,13 @@ namespace ProfileBook_Native.Core.ViewModels.MainList
 
         #region -- Overrides --
 
+        public override void ViewCreated()
+        {
+            base.ViewCreated();
+
+            _themeService.ChangeThemeTo((ETheme)_userService.Theme);
+        }
+
         public override async void ViewAppearing()
         {
             base.ViewAppearing();
@@ -112,8 +123,6 @@ namespace ProfileBook_Native.Core.ViewModels.MainList
 
         private async void OnDeleteButtonTappedCommandAsync(ProfileBindableModel profile)
         {
-            HasProfiles = Profiles.Any();
-
             var isConfirmed = await _userDialogs.ConfirmAsync(
                 Strings.AreYouSureYouWantToDelete,
                 okText: Strings.Yes,
@@ -121,8 +130,12 @@ namespace ProfileBook_Native.Core.ViewModels.MainList
 
             if (isConfirmed)
             {
-
+                Profiles.Remove(profile);
+                var profileModel = await _mapperService.MapAsync<ProfileModel>(profile);
+                await _profileService.DeleteProfileAsync(profileModel);
             }
+
+            HasProfiles = Profiles.Any();
         }
 
         private async void OnProfileTappedCommandAsync(ProfileBindableModel profile)
@@ -133,13 +146,6 @@ namespace ProfileBook_Native.Core.ViewModels.MainList
             {
                 await UpdateProfilesAsync();
             }
-        }
-
-        private async Task DeleteProfileAsync(ProfileBindableModel profileBindableModel)
-        {
-            var profileModel = await _mapperService.MapAsync<ProfileModel>(profileBindableModel);
-
-            _ = await _profileService.DeleteProfileAsync(profileModel);
         }
 
         private async Task UpdateProfilesAsync()
@@ -164,11 +170,11 @@ namespace ProfileBook_Native.Core.ViewModels.MainList
 
         private IEnumerable<ProfileBindableModel> GetSortedProfiles(IEnumerable<ProfileBindableModel> profiles)
         {
-            var result = (ESortOptions)_userService.SortOption switch
+            var result = (ESortOption)_userService.SortOption switch
             {
-                ESortOptions.ByDate => profiles.OrderBy(x => x.Date),
-                ESortOptions.ByName => profiles.OrderBy(x => x.Name),
-                ESortOptions.ByNickname => profiles.OrderBy(x => x.NickName),
+                ESortOption.ByDate => profiles.OrderBy(x => x.Date),
+                ESortOption.ByName => profiles.OrderBy(x => x.Name),
+                ESortOption.ByNickname => profiles.OrderBy(x => x.NickName),
                 _ => throw new System.NotImplementedException(),
             };
 

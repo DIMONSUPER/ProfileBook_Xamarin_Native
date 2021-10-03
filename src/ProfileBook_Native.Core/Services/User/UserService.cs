@@ -33,10 +33,10 @@ namespace ProfileBook_Native.Core.Services.User
             set => _settingsService.IsRememberMe = value;
         }
 
-        public bool IsDarkModeOn
+        public int Theme
         {
-            get => _settingsService.IsDarkModeOn;
-            set => _settingsService.IsDarkModeOn = value;
+            get => _settingsService.Theme;
+            set => _settingsService.Theme = value;
         }
 
         public string Language

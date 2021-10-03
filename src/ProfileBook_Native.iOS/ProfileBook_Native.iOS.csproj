@@ -138,9 +138,6 @@
     <ImageAsset Include="Resources\Media.xcassets\LaunchImages.launchimage\Contents.json">
       <Visible>false</Visible>
     </ImageAsset>
-    <BundleResource Include="Resources\Base.lproj\Localizable.strings" />
-    <BundleResource Include="Resources\ru.lproj\Localizable.strings" />
-    <BundleResource Include="Resources\uk.lproj\Localizable.strings" />
     <InterfaceDefinition Include="Views\SignIn\SignInView.xib" />
     <Compile Include="Views\SignIn\SignInView.cs" />
     <Compile Include="Views\SignIn\SignInView.designer.cs">
@@ -175,6 +172,16 @@
       <DependentUpon>AddEditProfileView.cs</DependentUpon>
     </Compile>
     <Compile Include="Converters\StringToImageConverter.cs" />
+    <InterfaceDefinition Include="Views\Settings\SettingsView.xib" />
+    <Compile Include="Views\Settings\SettingsView.cs" />
+    <Compile Include="Views\Settings\SettingsView.designer.cs">
+      <DependentUpon>SettingsView.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Settings\LanguagePickerDataSource.cs" />
+    <Compile Include="Views\ILocalazibleViewController.cs" />
+    <Compile Include="Contols\CustomSelectedItemView.cs" />
+    <Compile Include="Contols\RadioButtonViewGroup.cs" />
+    <Compile Include="Services\Theme\ThemeService.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -281,14 +288,14 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Views\SignIn\" />
-    <Folder Include="Resources\Base.lproj\" />
-    <Folder Include="Resources\uk.lproj\" />
-    <Folder Include="Resources\ru.lproj\" />
     <Folder Include="Views\SignUp\" />
     <Folder Include="Views\MainList\" />
     <Folder Include="Views\AddEditProfile\" />
     <Folder Include="Views\Settings\" />
     <Folder Include="Converters\" />
+    <Folder Include="Contols\" />
+    <Folder Include="Services\" />
+    <Folder Include="Services\Theme\" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

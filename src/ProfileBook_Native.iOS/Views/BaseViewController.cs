@@ -1,15 +1,17 @@
 ﻿using Cirrious.FluentLayouts.Touch;
 using MvvmCross.Platforms.Ios.Views;
 using MvvmCross.ViewModels;
+using ProfileBook_Native.Core.Resources.Strings;
 using ProfileBook_Native.iOS.Styles;
 using UIKit;
 
 namespace ProfileBook_Native.iOS.Views
 {
-    public abstract class BaseViewController<TViewModel> : MvxViewController<TViewModel>
+    public abstract class BaseViewController<TViewModel> : MvxViewController<TViewModel>, ILocalazibleViewController
         where TViewModel : class, IMvxViewModel
     {
         private UITapGestureRecognizer _tapGesture;
+        private readonly UIBarButtonItem _buttonItem = new() { Title = Strings.Back };
 
         public override void ViewDidLoad()
         {
@@ -22,10 +24,7 @@ namespace ProfileBook_Native.iOS.Views
             NavigationController.NavigationBar.Hidden = false;
             NavigationController.NavigationBar.BarTintColor = ColorPalette.Primary;
             NavigationController.NavigationBar.TintColor = UIColor.White;
-            NavigationController.NavigationBar.TitleTextAttributes = new UIStringAttributes
-            {
-                ForegroundColor = UIColor.White,
-            };
+            NavigationController.NavigationBar.TitleTextAttributes = new() { ForegroundColor = UIColor.White };
 
             NavigationController.SetNeedsStatusBarAppearanceUpdate();
 
@@ -34,6 +33,8 @@ namespace ProfileBook_Native.iOS.Views
             LayoutView();
 
             BindView();
+
+            SetLocalizableStrings();
 
             _tapGesture = new UITapGestureRecognizer(() => View.EndEditing(true))
             {
@@ -64,7 +65,13 @@ namespace ProfileBook_Native.iOS.Views
 
         #endregion
 
-        #region -- Protected virtual helpers --
+        #region -- Virtual helpers --
+
+        public virtual void SetLocalizableStrings()
+        {
+            _buttonItem.Title = Strings.Back;
+            NavigationController.NavigationBar.TopItem.BackBarButtonItem = _buttonItem;
+        }
 
         protected virtual void CreateView()
         {

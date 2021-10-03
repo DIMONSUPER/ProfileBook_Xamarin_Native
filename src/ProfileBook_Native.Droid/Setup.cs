@@ -8,6 +8,8 @@ namespace ProfileBook_Native.Droid
 {
     public class Setup : MvxAndroidSetup<App>
     {
+        #region -- Overrides --
+
         protected override ILoggerProvider CreateLogProvider() => new SerilogLoggerProvider();
 
         protected override ILoggerFactory CreateLogFactory()
@@ -19,5 +21,7 @@ namespace ProfileBook_Native.Droid
 
             return new SerilogLoggerFactory();
         }
+
+        #endregion
     }
 }

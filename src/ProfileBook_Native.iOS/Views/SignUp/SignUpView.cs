@@ -30,7 +30,7 @@ namespace ProfileBook_Native.iOS.Views.SignUp
             this.CreateBinding(SignUpButton).To<SignUpViewModel>(vm => vm.SignUpButtonTappedCommand).Apply();
         }
 
-        private void SetLocalizableStrings()
+        public override void SetLocalizableStrings()
         {
             Title = Strings.SignUpPage;
             LoginTextField.Placeholder = Strings.Login;

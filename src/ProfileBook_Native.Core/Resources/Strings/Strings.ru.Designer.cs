@@ -16,21 +16,21 @@ namespace ProfileBook_Native.Core.Resources.Strings {
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "4.0.0.0")]
     [System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    public class Strings {
+    internal class Strings_ru {
         
         private static System.Resources.ResourceManager resourceMan;
         
         private static System.Globalization.CultureInfo resourceCulture;
         
         [System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
-        internal Strings() {
+        internal Strings_ru() {
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        public static System.Resources.ResourceManager ResourceManager {
+        internal static System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.Equals(null, resourceMan)) {
-                    System.Resources.ResourceManager temp = new System.Resources.ResourceManager("ProfileBook_Native.Core.Resources.Strings.Strings", typeof(Strings).Assembly);
+                    System.Resources.ResourceManager temp = new System.Resources.ResourceManager("ProfileBook_Native.Core.Resources.Strings.Strings.ru", typeof(Strings_ru).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -38,7 +38,7 @@ namespace ProfileBook_Native.Core.Resources.Strings {
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        public static System.Globalization.CultureInfo Culture {
+        internal static System.Globalization.CultureInfo Culture {
             get {
                 return resourceCulture;
             }
@@ -47,241 +47,241 @@ namespace ProfileBook_Native.Core.Resources.Strings {
             }
         }
         
-        public static string SignInPage {
+        internal static string SignInPage {
             get {
                 return ResourceManager.GetString("SignInPage", resourceCulture);
             }
         }
         
-        public static string SignUpPage {
+        internal static string SignUpPage {
             get {
                 return ResourceManager.GetString("SignUpPage", resourceCulture);
             }
         }
         
-        public static string Login {
+        internal static string Login {
             get {
                 return ResourceManager.GetString("Login", resourceCulture);
             }
         }
         
-        public static string Password {
+        internal static string Password {
             get {
                 return ResourceManager.GetString("Password", resourceCulture);
             }
         }
         
-        public static string SignIn {
+        internal static string SignIn {
             get {
                 return ResourceManager.GetString("SignIn", resourceCulture);
             }
         }
         
-        public static string SignUp {
+        internal static string SignUp {
             get {
                 return ResourceManager.GetString("SignUp", resourceCulture);
             }
         }
         
-        public static string ConfirmPassword {
+        internal static string ConfirmPassword {
             get {
                 return ResourceManager.GetString("ConfirmPassword", resourceCulture);
             }
         }
         
-        public static string LoginWarning1 {
+        internal static string LoginWarning1 {
             get {
                 return ResourceManager.GetString("LoginWarning1", resourceCulture);
             }
         }
         
-        public static string LoginWarning2 {
+        internal static string LoginWarning2 {
             get {
                 return ResourceManager.GetString("LoginWarning2", resourceCulture);
             }
         }
         
-        public static string LoginWarning3 {
+        internal static string LoginWarning3 {
             get {
                 return ResourceManager.GetString("LoginWarning3", resourceCulture);
             }
         }
         
-        public static string PasswordWarning1 {
+        internal static string PasswordWarning1 {
             get {
                 return ResourceManager.GetString("PasswordWarning1", resourceCulture);
             }
         }
         
-        public static string PasswordWarning2 {
+        internal static string PasswordWarning2 {
             get {
                 return ResourceManager.GetString("PasswordWarning2", resourceCulture);
             }
         }
         
-        public static string ConfirmPasswordWarning {
+        internal static string ConfirmPasswordWarning {
             get {
                 return ResourceManager.GetString("ConfirmPasswordWarning", resourceCulture);
             }
         }
         
-        public static string MainList {
+        internal static string MainList {
             get {
                 return ResourceManager.GetString("MainList", resourceCulture);
             }
         }
         
-        public static string LogOut {
+        internal static string LogOut {
             get {
                 return ResourceManager.GetString("LogOut", resourceCulture);
             }
         }
         
-        public static string Settings {
+        internal static string Settings {
             get {
                 return ResourceManager.GetString("Settings", resourceCulture);
             }
         }
         
-        public static string Edit {
+        internal static string Edit {
             get {
                 return ResourceManager.GetString("Edit", resourceCulture);
             }
         }
         
-        public static string Delete {
+        internal static string Delete {
             get {
                 return ResourceManager.GetString("Delete", resourceCulture);
             }
         }
         
-        public static string Back {
+        internal static string Back {
             get {
                 return ResourceManager.GetString("Back", resourceCulture);
             }
         }
         
-        public static string NoProfiles {
+        internal static string NoProfiles {
             get {
                 return ResourceManager.GetString("NoProfiles", resourceCulture);
             }
         }
         
-        public static string NickName {
+        internal static string NickName {
             get {
                 return ResourceManager.GetString("NickName", resourceCulture);
             }
         }
         
-        public static string Name {
+        internal static string Name {
             get {
                 return ResourceManager.GetString("Name", resourceCulture);
             }
         }
         
-        public static string Description {
+        internal static string Description {
             get {
                 return ResourceManager.GetString("Description", resourceCulture);
             }
         }
         
-        public static string AddProfile {
+        internal static string AddProfile {
             get {
                 return ResourceManager.GetString("AddProfile", resourceCulture);
             }
         }
         
-        public static string EditProfile {
+        internal static string EditProfile {
             get {
                 return ResourceManager.GetString("EditProfile", resourceCulture);
             }
         }
         
-        public static string Save {
+        internal static string Save {
             get {
                 return ResourceManager.GetString("Save", resourceCulture);
             }
         }
         
-        public static string PickFromGallery {
+        internal static string PickFromGallery {
             get {
                 return ResourceManager.GetString("PickFromGallery", resourceCulture);
             }
         }
         
-        public static string TakeAPhoto {
+        internal static string TakeAPhoto {
             get {
                 return ResourceManager.GetString("TakeAPhoto", resourceCulture);
             }
         }
         
-        public static string SortBy {
+        internal static string SortBy {
             get {
                 return ResourceManager.GetString("SortBy", resourceCulture);
             }
         }
         
-        public static string Date {
+        internal static string Date {
             get {
                 return ResourceManager.GetString("Date", resourceCulture);
             }
         }
         
-        public static string Dark {
+        internal static string Dark {
             get {
                 return ResourceManager.GetString("Dark", resourceCulture);
             }
         }
         
-        public static string Light {
+        internal static string Light {
             get {
                 return ResourceManager.GetString("Light", resourceCulture);
             }
         }
         
-        public static string Theme {
+        internal static string Theme {
             get {
                 return ResourceManager.GetString("Theme", resourceCulture);
             }
         }
         
-        public static string ChooseLanguage {
+        internal static string ChooseLanguage {
             get {
                 return ResourceManager.GetString("ChooseLanguage", resourceCulture);
             }
         }
         
-        public static string RememberMe {
+        internal static string RememberMe {
             get {
                 return ResourceManager.GetString("RememberMe", resourceCulture);
             }
         }
         
-        public static string InvalidLoginOrPassword {
+        internal static string InvalidLoginOrPassword {
             get {
                 return ResourceManager.GetString("InvalidLoginOrPassword", resourceCulture);
             }
         }
         
-        public static string Cancel {
+        internal static string Cancel {
             get {
                 return ResourceManager.GetString("Cancel", resourceCulture);
             }
         }
         
-        public static string AreYouSureYouWantToDelete {
+        internal static string AreYouSureYouWantToDelete {
             get {
                 return ResourceManager.GetString("AreYouSureYouWantToDelete", resourceCulture);
             }
         }
         
-        public static string Yes {
+        internal static string Yes {
             get {
                 return ResourceManager.GetString("Yes", resourceCulture);
             }
         }
         
-        public static string No {
+        internal static string No {
             get {
                 return ResourceManager.GetString("No", resourceCulture);
             }

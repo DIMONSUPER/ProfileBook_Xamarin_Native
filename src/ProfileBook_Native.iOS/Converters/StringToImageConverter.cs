@@ -1,6 +1,5 @@
 using System;
 using System.Globalization;
-using CoreGraphics;
 using Foundation;
 using MvvmCross.Converters;
 using UIKit;
@@ -15,7 +14,7 @@ namespace ProfileBook_Native.iOS.Converters
         {
             UIImage image = null;
 
-            if (value is not null)
+            if (value is not null && value.Length > 0)
             {
                 image = new UIImage(NSData.FromArray(value));
             }

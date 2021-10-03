@@ -19,10 +19,10 @@ namespace ProfileBook_Native.Core.Services.Settings
             set => _settings.AddOrUpdateValue(nameof(IsAuthCompleted), value);
         }
 
-        public bool IsDarkModeOn
+        public int Theme
         {
-            get => _settings.GetValueOrDefault(nameof(IsDarkModeOn), false);
-            set => _settings.AddOrUpdateValue(nameof(IsDarkModeOn), value);
+            get => _settings.GetValueOrDefault(nameof(Theme), 0);
+            set => _settings.AddOrUpdateValue(nameof(Theme), value);
         }
 
         public bool IsRememberMe

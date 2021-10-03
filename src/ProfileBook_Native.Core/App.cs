@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System.Globalization;
+using System.Threading.Tasks;
 using Acr.UserDialogs;
 using MvvmCross;
 using MvvmCross.IoC;
@@ -7,6 +8,8 @@ using MvvmCross.ViewModels;
 using Plugin.Media;
 using Plugin.Permissions;
 using Plugin.Settings;
+using ProfileBook_Native.Core.Enums;
+using ProfileBook_Native.Core.Services.Theme;
 using ProfileBook_Native.Core.Services.User;
 using ProfileBook_Native.Core.ViewModels.MainList;
 using ProfileBook_Native.Core.ViewModels.SignIn;
@@ -53,6 +56,8 @@ namespace ProfileBook_Native.Core
 
         protected override Task NavigateToFirstViewModel(object hint = null)
         {
+            InitLanguage();
+
             if (_userService.IsAuthCompleted)
             {
                 NavigationService.Navigate<MainListViewModel>().GetAwaiter().GetResult();
@@ -63,6 +68,17 @@ namespace ProfileBook_Native.Core
             }
 
             return Task.CompletedTask;
+        }
+
+        #endregion
+
+        #region -- Private helpers --
+
+        private void InitLanguage()
+        {
+            CultureInfo.DefaultThreadCurrentCulture = !string.IsNullOrEmpty(_userService.Language)
+                ? (CultureInfo.DefaultThreadCurrentUICulture = new(_userService.Language))
+                : (CultureInfo.DefaultThreadCurrentUICulture = new(Constants.ENGLISH_CODE));
         }
 
         #endregion

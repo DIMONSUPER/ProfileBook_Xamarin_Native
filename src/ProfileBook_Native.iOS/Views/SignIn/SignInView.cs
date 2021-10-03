@@ -36,7 +36,7 @@ namespace ProfileBook_Native.iOS.Views.SignIn
 
         #region -- Private helpers --
 
-        private void SetLocalizableStrings()
+        public override void SetLocalizableStrings()
         {
             Title = Strings.SignInPage;
             LoginTextField.Placeholder = Strings.Login;
