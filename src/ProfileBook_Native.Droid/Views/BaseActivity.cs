@@ -1,3 +1,4 @@
+using Acr.UserDialogs;
 using Android.OS;
 using Android.Runtime;
 using MvvmCross.Platforms.Android.Views;
@@ -13,8 +14,12 @@ namespace ProfileBook_Native.Droid.Views
 
         protected override void OnCreate(Bundle bundle)
         {
-            base.OnCreate(bundle);
+            UserDialogs.Init(this);
 
+            base.OnCreate(bundle);
+            base.SetTheme(Resource.Style.AppTheme);
+
+            var a = FindViewById(Resource.Id.appbar);
             SetContentView(ActivityLayoutId);
         }
 

@@ -70,11 +70,12 @@
     <Compile Include="Setup.cs" />
     <Compile Include="Views\BaseActivity.cs" />
     <Compile Include="Views\BaseFragment.cs" />
-    <Compile Include="Views\Main\MainContainerActivity.cs" />
-    <Compile Include="Views\Main\MainFragment.cs" />
     <Compile Include="Views\Splash\SplashActivity.cs" />
     <Compile Include="Resources\Resource.Designer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Views\SignIn\SignInView.cs" />
+    <Compile Include="Services\ThemeService.cs" />
+    <Compile Include="Views\SignUp\SignUpView.cs" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.Extensions.Logging.Abstractions">
@@ -128,15 +129,16 @@
     <None Include="Properties\AndroidManifest.xml" />
   </ItemGroup>
   <ItemGroup>
-    <AndroidResource Include="Resources\layout\fragment_main.axml" />
     <AndroidResource Include="Resources\layout\layout_toolbar.axml" />
-    <AndroidResource Include="Resources\layout\activity_main_container.axml" />
+    <AndroidResource Include="Resources\layout\SignInView.xml">
+      <SubType></SubType>
+      <Generator></Generator>
+    </AndroidResource>
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\values\strings.xml" />
     <AndroidResource Include="Resources\values\styles.xml" />
     <AndroidResource Include="Resources\values\colors.xml" />
-    <AndroidResource Include="Resources\values\dimens.xml" />
     <AndroidResource Include="Resources\values-v21\styles.xml" />
     <AndroidResource Include="Resources\drawable\splash_screen.xml" />
     <AndroidResource Include="Resources\mipmap-hdpi\ic_launcher.png" />
@@ -168,6 +170,8 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Views\SignIn\" />
+    <Folder Include="Services\" />
+    <Folder Include="Views\SignUp\" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
