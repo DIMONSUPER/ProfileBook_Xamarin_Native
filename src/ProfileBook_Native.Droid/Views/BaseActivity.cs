@@ -1,4 +1,6 @@
 using Acr.UserDialogs;
+using Android.App;
+using Android.Content.PM;
 using Android.OS;
 using Android.Runtime;
 using MvvmCross.Platforms.Android.Views;
@@ -12,6 +14,8 @@ namespace ProfileBook_Native.Droid.Views
     {
         protected abstract int ActivityLayoutId { get; }
 
+        #region -- Overrides --
+
         protected override void OnCreate(Bundle bundle)
         {
             UserDialogs.Init(this);
@@ -19,7 +23,6 @@ namespace ProfileBook_Native.Droid.Views
             base.OnCreate(bundle);
             base.SetTheme(Resource.Style.AppTheme);
 
-            var a = FindViewById(Resource.Id.appbar);
             SetContentView(ActivityLayoutId);
         }
 
@@ -28,5 +31,7 @@ namespace ProfileBook_Native.Droid.Views
             PermissionsImplementation.Current.OnRequestPermissionsResult(requestCode, permissions, grantResults);
             base.OnRequestPermissionsResult(requestCode, permissions, grantResults);
         }
+
+        #endregion
     }
 }
