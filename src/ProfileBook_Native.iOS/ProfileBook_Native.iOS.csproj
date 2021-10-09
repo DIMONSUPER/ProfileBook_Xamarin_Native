@@ -49,7 +49,7 @@
     <WarningLevel>4</WarningLevel>
     <ConsolePause>false</ConsolePause>
     <MtouchArch>ARM64</MtouchArch>
-    <CodesignKey>Apple Distribution: Sergii Gerasymenko (6XMYH77MJ3)</CodesignKey>
+    <CodesignKey>Apple Development: Sergii Gerasymenko (34LZA5X38D)</CodesignKey>
     <MtouchDebug>true</MtouchDebug>
     <MtouchLink>SdkOnly</MtouchLink>
     <MtouchExtraArgs>--linkskip=ProfileBook_Native.Core</MtouchExtraArgs>

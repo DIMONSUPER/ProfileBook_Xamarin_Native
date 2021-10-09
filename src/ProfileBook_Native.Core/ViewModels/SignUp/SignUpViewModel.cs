@@ -1,3 +1,4 @@
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using Acr.UserDialogs;
@@ -30,37 +31,41 @@ namespace ProfileBook_Native.Core.ViewModels.SignUp
         public string Login
         {
             get => _login;
-            set
-            {
-                SetProperty(ref _login, value);
-                SignUpButtonTappedCommand?.RaiseCanExecuteChanged();
-            }
+            set => SetProperty(ref _login, value);
         }
 
         private string _password;
         public string Password
         {
             get => _password;
-            set
-            {
-                SetProperty(ref _password, value);
-                SignUpButtonTappedCommand?.RaiseCanExecuteChanged();
-            }
+            set => SetProperty(ref _password, value);
         }
 
         private string _confirmPassword;
         public string ConfirmPassword
         {
             get => _confirmPassword;
-            set
-            {
-                SetProperty(ref _confirmPassword, value);
-                SignUpButtonTappedCommand?.RaiseCanExecuteChanged();
-            }
+            set => SetProperty(ref _confirmPassword, value);
         }
 
         private IMvxCommand _signUpButtonTappedCommand;
         public IMvxCommand SignUpButtonTappedCommand => _signUpButtonTappedCommand ??= new MvxCommand(OnSignUpButtonTappedCommandAsync, CanExecute);
+
+        #endregion
+
+        #region -- Overrides --
+
+        protected override void OnPropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            base.OnPropertyChanged(sender, e);
+
+            if (e.PropertyName == nameof(Login) ||
+                e.PropertyName == nameof(Password) ||
+                e.PropertyName == nameof(ConfirmPassword))
+            {
+                SignUpButtonTappedCommand?.RaiseCanExecuteChanged();
+            }
+        }
 
         #endregion
 
@@ -119,8 +124,12 @@ namespace ProfileBook_Native.Core.ViewModels.SignUp
         {
             var builder = new StringBuilder();
 
-            builder.Append((Password.Length < 8 || Login.Length > 16) ? Strings.PasswordWarning1 + '\n' : string.Empty);
-            builder.Append((Password != ConfirmPassword) ? Strings.ConfirmPasswordWarning + '\n' : string.Empty);
+            builder.Append((Password.Length < 8 || Login.Length > 16) ? Strings.PasswordWarning1 : string.Empty);
+            builder.Append('\n');
+
+            builder.Append((Password != ConfirmPassword) ? Strings.ConfirmPasswordWarning : string.Empty);
+            builder.Append('\n');
+
             builder.Append((!Password.Any(x => char.IsUpper(x)) || !Password.Any(x => char.IsLower(x)) || !Password.Any(x => char.IsDigit(x)))
                 ? Strings.PasswordWarning2
                 : string.Empty);

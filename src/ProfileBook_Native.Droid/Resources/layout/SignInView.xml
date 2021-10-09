@@ -59,12 +59,11 @@
 
     <Button
         android:id="@+id/sign_in_button"
-        android:background="@android:color/holo_orange_dark"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="40dp"
         android:layout_marginRight="40dp"
-        android:textColor="@color/primaryTextColor"
+        android:backgroundTint="@android:color/holo_orange_dark"
         app:layout_constraintBottom_toTopOf="@id/sign_up_button"
         local:MvxBind="Click SignInButtonTappedCommand"/>
 

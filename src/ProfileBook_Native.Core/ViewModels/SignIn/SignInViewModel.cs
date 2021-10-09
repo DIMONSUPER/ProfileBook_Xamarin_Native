@@ -1,3 +1,4 @@
+using System.ComponentModel;
 using System.Linq;
 using Acr.UserDialogs;
 using MvvmCross.Commands;
@@ -36,22 +37,14 @@ namespace ProfileBook_Native.Core.ViewModels.SignIn
         public string Login
         {
             get => _login;
-            set
-            {
-                SetProperty(ref _login, value);
-                SignInButtonTappedCommand?.RaiseCanExecuteChanged();
-            }
+            set => SetProperty(ref _login, value);
         }
 
         private string _password;
         public string Password
         {
             get => _password;
-            set
-            {
-                SetProperty(ref _password, value);
-                SignInButtonTappedCommand?.RaiseCanExecuteChanged();
-            }
+            set => SetProperty(ref _password, value);
         }
 
         private bool _isRememberMe;
@@ -78,20 +71,33 @@ namespace ProfileBook_Native.Core.ViewModels.SignIn
             _themeService.ChangeThemeTo((ETheme)_userService.Theme);
         }
 
+        protected override void OnPropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            base.OnPropertyChanged(sender, e);
+
+            if (e.PropertyName == nameof(Login) ||
+                e.PropertyName == nameof(Password))
+            {
+                SignInButtonTappedCommand?.RaiseCanExecuteChanged();
+            }
+        }
+
         #endregion
 
         #region -- Private helpers --
 
         private bool CanExecute()
         {
-            return !string.IsNullOrEmpty(Login) && !string.IsNullOrEmpty(Password);
+            return !string.IsNullOrEmpty(Login) &&
+                   !string.IsNullOrEmpty(Password);
         }
 
         private async void OnSignInButtonTappedCommandAsync()
         {
             var users = await _userService.GetAllUsersAsync();
 
-            if (users.Any(x => x.Login == Login && x.Password == Password))
+            if (users.Any(x => x.Login == Login &&
+                               x.Password == Password))
             {
                 _userService.IsRememberMe = IsRememberMe;
                 _userService.IsAuthCompleted = true;

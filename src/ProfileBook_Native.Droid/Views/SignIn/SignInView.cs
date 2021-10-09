@@ -23,6 +23,13 @@ namespace ProfileBook_Native.Droid.Views.SignIn
 
         protected override int ActivityLayoutId => Resource.Layout.SignInView;
 
+        protected override void OnStart()
+        {
+            base.OnStart();
+
+            OverridePendingTransition(Resource.Animation.slide_in_left, Resource.Animation.slide_out_right);
+        }
+
         protected override void OnCreate(Bundle bundle)
         {
             base.OnCreate(bundle);

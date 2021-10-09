@@ -43,7 +43,7 @@
         <value>Login mustn't start with digit</value>
   </data>
 	<data name="PasswordWarning1" xml:space="preserve">
-        <value>Password must contain more at least 8 and no more than 16 symbols</value>
+        <value>Password must contain at least 8 and no more than 16 symbols</value>
   </data>
 	<data name="PasswordWarning2" xml:space="preserve">
         <value>Password must contain at least one upper letter, small letter and digit</value>
