@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Input;
@@ -73,6 +74,9 @@ namespace ProfileBook_Native.Core.ViewModels.MainList
         private ICommand _profileTappedCommand;
         public ICommand ProfileTappedCommand => _profileTappedCommand ??= new MvxCommand<ProfileBindableModel>(OnProfileTappedCommandAsync);
 
+        private ICommand _profileAvatarTappedCommand;
+        public ICommand ProfileAvatarTappedCommand => _profileAvatarTappedCommand ??= new MvxCommand<ProfileBindableModel>(OnProfileAvatarTappedCommandAsync);
+
         private ICommand _addButtonTappedCommand;
         public ICommand AddButtonTappedCommand => _addButtonTappedCommand ??= new MvxCommand(OnAddButtonTappedCommandAsync);
 
@@ -80,11 +84,13 @@ namespace ProfileBook_Native.Core.ViewModels.MainList
 
         #region -- Overrides --
 
-        public override void ViewCreated()
+        public override async void ViewCreated()
         {
             base.ViewCreated();
 
             _themeService.ChangeThemeTo((ETheme)_userService.Theme);
+
+            await UpdateProfilesAsync();
         }
 
         public override async void ViewAppearing()
@@ -94,9 +100,23 @@ namespace ProfileBook_Native.Core.ViewModels.MainList
             await UpdateProfilesAsync();
         }
 
+        protected override void OnPropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            base.OnPropertyChanged(sender, e);
+
+            if (e.PropertyName == nameof(Profiles))
+            {
+                HasProfiles = Profiles != null && Profiles.Any();
+            }
+        }
+
         #endregion
 
         #region -- Private helpers --
+
+        private void OnProfileAvatarTappedCommandAsync(ProfileBindableModel profile)
+        {
+        }
 
         private async void OnAddButtonTappedCommandAsync()
         {
@@ -110,10 +130,18 @@ namespace ProfileBook_Native.Core.ViewModels.MainList
 
         private async void OnLogOutButtonTappedCommandAsync()
         {
-            _userService.IsRememberMe = _userService.IsAuthCompleted = false;
-            _userService.CurrentUserId = -1;
+            var isConfirmed = await _userDialogs.ConfirmAsync(
+                Strings.AreYouSureUWantToLogOut,
+                okText: Strings.Yes,
+                cancelText: Strings.No);
 
-            await Task.WhenAll(NavigationService.Navigate<SignInViewModel>(), NavigationService.Close(this));
+            if (isConfirmed)
+            {
+                _userService.IsRememberMe = _userService.IsAuthCompleted = false;
+                _userService.CurrentUserId = -1;
+
+                await Task.WhenAll(NavigationService.Navigate<SignInViewModel>(), NavigationService.Close(this));
+            }
         }
 
         private async void OnSettingsButtonTappedCommandAsync()
@@ -134,8 +162,6 @@ namespace ProfileBook_Native.Core.ViewModels.MainList
                 var profileModel = await _mapperService.MapAsync<ProfileModel>(profile);
                 await _profileService.DeleteProfileAsync(profileModel);
             }
-
-            HasProfiles = Profiles.Any();
         }
 
         private async void OnProfileTappedCommandAsync(ProfileBindableModel profile)
@@ -157,28 +183,25 @@ namespace ProfileBook_Native.Core.ViewModels.MainList
                 var profileBindableModels = await _mapperService.MapRangeAsync<ProfileModel, ProfileBindableModel>(profilesRequest.Result, (m, vm) =>
                 {
                     vm.TapCommad = ProfileTappedCommand;
+                    vm.AvatarTappedCommad = ProfileAvatarTappedCommand;
                     vm.DeleteCommand = DeleteButtonTappedCommand;
                 });
 
                 var sortedProfiles = GetSortedProfiles(profileBindableModels.Where(x => x.UserId == _userService.CurrentUserId));
 
                 Profiles = new(sortedProfiles);
-
-                HasProfiles = Profiles.Any();
             }
         }
 
         private IEnumerable<ProfileBindableModel> GetSortedProfiles(IEnumerable<ProfileBindableModel> profiles)
         {
-            var result = (ESortOption)_userService.SortOption switch
+            return (ESortOption)_userService.SortOption switch
             {
                 ESortOption.ByDate => profiles.OrderBy(x => x.Date),
                 ESortOption.ByName => profiles.OrderBy(x => x.Name),
                 ESortOption.ByNickname => profiles.OrderBy(x => x.NickName),
                 _ => throw new System.NotImplementedException(),
             };
-
-            return result;
         }
 
         #endregion

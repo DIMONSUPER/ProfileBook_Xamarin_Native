@@ -1,14 +1,5 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
+using Acr.UserDialogs;
 using Android.App;
-using Android.Content;
-using Android.OS;
-using Android.Runtime;
-using Android.Views;
-using Android.Widget;
 using MvvmCross.Platforms.Android.Views;
 
 namespace ProfileBook_Native.Droid.Views.Splash
@@ -22,5 +13,15 @@ namespace ProfileBook_Native.Droid.Views.Splash
         RoundIcon = "@mipmap/ic_launcher_round")]
     public class SplashActivity : MvxSplashScreenActivity
     {
+        #region -- Overrides --
+
+        protected override void OnStart()
+        {
+            base.OnStart();
+
+            UserDialogs.Init(this);
+        }
+
+        #endregion
     }
 }

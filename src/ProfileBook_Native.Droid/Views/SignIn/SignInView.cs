@@ -1,6 +1,5 @@
 using System.Linq;
 using Android.App;
-using Android.Content.PM;
 using Android.OS;
 using Android.Text;
 using Android.Text.Style;
@@ -10,7 +9,7 @@ using ProfileBook_Native.Core.ViewModels.SignIn;
 
 namespace ProfileBook_Native.Droid.Views.SignIn
 {
-    [Activity(MainLauncher = true, ScreenOrientation = ScreenOrientation.Portrait)]
+    [Activity]
     public class SignInView : BaseActivity<SignInViewModel>
     {
         private Button _signUpButton;
@@ -34,13 +33,18 @@ namespace ProfileBook_Native.Droid.Views.SignIn
         {
             base.OnCreate(bundle);
 
-            _signUpButton = FindViewById(Resource.Id.sign_up_button) as Button;
-            _signInButton = FindViewById(Resource.Id.sign_in_button) as Button;
-            _passwordEditText = FindViewById(Resource.Id.password_edit_text) as EditText;
-            _loginEditText = FindViewById(Resource.Id.login_edit_text) as EditText;
-            _rememberMeTextView = FindViewById(Resource.Id.remember_me_text_view) as TextView;
+            _signUpButton = FindViewById<Button>(Resource.Id.sign_up_button);
+            _signInButton = FindViewById<Button>(Resource.Id.sign_in_button);
+            _passwordEditText = FindViewById<EditText>(Resource.Id.password_edit_text);
+            _loginEditText = FindViewById<EditText>(Resource.Id.login_edit_text);
+            _rememberMeTextView = FindViewById<TextView>(Resource.Id.remember_me_text_view);
 
             SetLocalazableStrings();
+        }
+
+        public override void OnBackPressed()
+        {
+            //It prevents user from exiting the app when back button pressed
         }
 
         #endregion

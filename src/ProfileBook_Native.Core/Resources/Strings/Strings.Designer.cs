@@ -286,5 +286,11 @@ namespace ProfileBook_Native.Core.Resources.Strings {
                 return ResourceManager.GetString("No", resourceCulture);
             }
         }
+        
+        public static string AreYouSureUWantToLogOut {
+            get {
+                return ResourceManager.GetString("AreYouSureUWantToLogOut", resourceCulture);
+            }
+        }
     }
 }

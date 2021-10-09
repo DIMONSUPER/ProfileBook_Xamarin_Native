@@ -1,6 +1,7 @@
 using Acr.UserDialogs;
 using Android.OS;
 using Android.Runtime;
+using AndroidX.AppCompat.Widget;
 using MvvmCross.Platforms.Android.Views;
 using MvvmCross.ViewModels;
 using Plugin.Permissions;
@@ -16,10 +17,9 @@ namespace ProfileBook_Native.Droid.Views
 
         protected override void OnCreate(Bundle bundle)
         {
-            UserDialogs.Init(this);
-
             base.OnCreate(bundle);
             base.SetTheme(Resource.Style.AppTheme);
+            RequestedOrientation = Android.Content.PM.ScreenOrientation.Portrait;
 
             SetContentView(ActivityLayoutId);
         }

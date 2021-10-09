@@ -67,6 +67,7 @@ namespace ProfileBook_Native.iOS.Views.Settings
 
         public override void SetLocalizableStrings()
         {
+            base.SetLocalizableStrings();
             Title = Strings.Settings;
             SortByLabel.Text = Strings.SortBy;
             ThemeLabel.Text = Strings.Theme;

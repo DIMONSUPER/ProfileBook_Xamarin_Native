@@ -11,7 +11,6 @@ namespace ProfileBook_Native.iOS.Views
         where TViewModel : class, IMvxViewModel
     {
         private UITapGestureRecognizer _tapGesture;
-        private readonly UIBarButtonItem _buttonItem = new() { Title = Strings.Back };
 
         public override void ViewDidLoad()
         {
@@ -69,8 +68,7 @@ namespace ProfileBook_Native.iOS.Views
 
         public virtual void SetLocalizableStrings()
         {
-            _buttonItem.Title = Strings.Back;
-            NavigationController.NavigationBar.TopItem.BackBarButtonItem = _buttonItem;
+            NavigationController.NavigationBar.TopItem.BackBarButtonItem.Title = Strings.Back;
         }
 
         protected virtual void CreateView()

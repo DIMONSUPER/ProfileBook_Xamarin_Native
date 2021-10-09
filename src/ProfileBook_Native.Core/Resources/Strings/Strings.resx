@@ -132,4 +132,7 @@
   <data name="No" xml:space="preserve">
         <value>No</value>
   </data>
+  <data name="AreYouSureUWantToLogOut" xml:space="preserve">
+        <value>Are you sure that you want to log out?</value>
+  </data>
 </root>

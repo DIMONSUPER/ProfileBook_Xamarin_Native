@@ -132,4 +132,7 @@
   <data name="No" xml:space="preserve">
         <value>Нет</value>
   </data>
+  <data name="AreYouSureUWantToLogOut" xml:space="preserve">
+        <value>Вы уверены что вы хотите выйти из аккаунта?</value>
+  </data>
 </root>

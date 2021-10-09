@@ -1,5 +1,4 @@
 using Android.App;
-using Android.Content.PM;
 using Android.OS;
 using Android.Views;
 using Android.Widget;
@@ -8,7 +7,7 @@ using ProfileBook_Native.Core.ViewModels.SignUp;
 
 namespace ProfileBook_Native.Droid.Views.SignUp
 {
-    [Activity(ScreenOrientation = ScreenOrientation.Portrait)]
+    [Activity]
     public class SignUpView : BaseActivity<SignUpViewModel>
     {
         private Button _signUpButton;
@@ -32,10 +31,10 @@ namespace ProfileBook_Native.Droid.Views.SignUp
             base.OnCreate(bundle);
             SupportActionBar.SetDisplayHomeAsUpEnabled(true);
 
-            _signUpButton = FindViewById(Resource.Id.sign_up_button) as Button;
-            _passwordEditText = FindViewById(Resource.Id.password_edit_text) as EditText;
-            _confirmPasswordEditText = FindViewById(Resource.Id.confirm_password_edit_text) as EditText;
-            _loginEditText = FindViewById(Resource.Id.login_edit_text) as EditText;
+            _signUpButton = FindViewById<Button>(Resource.Id.sign_up_button);
+            _passwordEditText = FindViewById<EditText>(Resource.Id.password_edit_text);
+            _confirmPasswordEditText = FindViewById<EditText>(Resource.Id.confirm_password_edit_text);
+            _loginEditText = FindViewById<EditText>(Resource.Id.login_edit_text);
 
             SetLocalazableStrings();
         }

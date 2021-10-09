@@ -77,6 +77,9 @@
     <Compile Include="Services\ThemeService.cs" />
     <Compile Include="Views\SignUp\SignUpView.cs" />
     <Compile Include="Views\MainList\MainListView.cs" />
+    <Compile Include="Views\MainList\ProfileListViewItem.cs" />
+    <Compile Include="Views\MainList\ProfileListViewAdapter.cs" />
+    <Compile Include="Views\MainList\ProfileListView.cs" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.Extensions.Logging.Abstractions">
@@ -156,6 +159,10 @@
       <Generator></Generator>
     </AndroidResource>
     <AndroidResource Include="Resources\layout\MainListView.xml">
+      <SubType></SubType>
+      <Generator></Generator>
+    </AndroidResource>
+    <AndroidResource Include="Resources\layout\profilelistviewitem.xml">
       <SubType></SubType>
       <Generator></Generator>
     </AndroidResource>
@@ -283,6 +290,10 @@
       <SubType></SubType>
       <Generator></Generator>
     </AndroidResource>
+    <AndroidResource Include="Resources\menu\menu.xml">
+      <SubType></SubType>
+      <Generator></Generator>
+    </AndroidResource>
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\values\strings.xml" />
@@ -323,6 +334,7 @@
     <Folder Include="Views\SignUp\" />
     <Folder Include="Resources\anim\" />
     <Folder Include="Views\MainList\" />
+    <Folder Include="Resources\menu\" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.

@@ -1,7 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:local="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -13,7 +12,7 @@
         android:singleLine="true"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintBottom_toTopOf="@id/password_edit_text"
+        local:layout_constraintBottom_toTopOf="@id/password_edit_text"
         android:layout_marginLeft="40dp"
         android:layout_marginRight="40dp"
         android:textColor="@color/primaryTextColor"
@@ -29,9 +28,9 @@
         android:layout_marginRight="40dp"
         android:layout_marginTop="10dp"
         android:textColor="@color/primaryTextColor"
-        app:layout_constraintBottom_toTopOf="@id/confirm_password_edit_text"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
+        local:layout_constraintBottom_toTopOf="@id/confirm_password_edit_text"
+        local:layout_constraintRight_toRightOf="parent"
+        local:layout_constraintLeft_toLeftOf="parent"
         local:MvxBind="Text Password"/>
 
     <EditText
@@ -44,10 +43,10 @@
         android:layout_marginRight="40dp"
         android:layout_marginTop="10dp"
         android:textColor="@color/primaryTextColor"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
+        local:layout_constraintTop_toTopOf="parent"
+        local:layout_constraintBottom_toBottomOf="parent"
+        local:layout_constraintRight_toRightOf="parent"
+        local:layout_constraintLeft_toLeftOf="parent"
         local:MvxBind="Text ConfirmPassword"/>
 
     <Button
@@ -58,7 +57,7 @@
         android:layout_marginRight="40dp"
         android:layout_marginBottom="80dp"
         android:backgroundTint="@android:color/holo_orange_dark"
-        app:layout_constraintBottom_toBottomOf="parent"
+        local:layout_constraintBottom_toBottomOf="parent"
         local:MvxBind="Click SignUpButtonTappedCommand"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
