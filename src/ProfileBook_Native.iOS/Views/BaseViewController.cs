@@ -68,7 +68,10 @@ namespace ProfileBook_Native.iOS.Views
 
         public virtual void SetLocalizableStrings()
         {
-            NavigationController.NavigationBar.TopItem.BackBarButtonItem.Title = Strings.Back;
+            if (NavigationController?.NavigationBar?.TopItem?.BackBarButtonItem is not null)
+            {
+                NavigationController.NavigationBar.TopItem.BackBarButtonItem.Title = Strings.Back;
+            }
         }
 
         protected virtual void CreateView()

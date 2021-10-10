@@ -171,7 +171,7 @@
     <Compile Include="Views\AddEditProfile\AddEditProfileView.designer.cs">
       <DependentUpon>AddEditProfileView.cs</DependentUpon>
     </Compile>
-    <Compile Include="Converters\StringToImageConverter.cs" />
+    <Compile Include="Converters\BytesToImageConverter.cs" />
     <InterfaceDefinition Include="Views\Settings\SettingsView.xib" />
     <Compile Include="Views\Settings\SettingsView.cs" />
     <Compile Include="Views\Settings\SettingsView.designer.cs">

@@ -3,6 +3,7 @@ using MvvmCross.IoC;
 using MvvmCross.Platforms.Android.Core;
 using ProfileBook_Native.Core;
 using ProfileBook_Native.Core.Services.Theme;
+using ProfileBook_Native.Core.Services.User;
 using ProfileBook_Native.Droid.Services;
 using Serilog;
 using Serilog.Extensions.Logging;

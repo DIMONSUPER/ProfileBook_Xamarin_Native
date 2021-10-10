@@ -132,8 +132,8 @@ namespace ProfileBook_Native.Core.ViewModels.AddEditProfile
             var photoPermissionRequest = await _permissionService.RequestPhotosPermission();
             var storagePermissionRequest = await _permissionService.RequestStoragePermission();
 
-            var isPermissionsGranted = photoPermissionRequest.IsSuccess && photoPermissionRequest.Result
-                                       && storagePermissionRequest.IsSuccess && storagePermissionRequest.Result;
+            var isPermissionsGranted = photoPermissionRequest.IsSuccess && photoPermissionRequest.Result &&
+                                       storagePermissionRequest.IsSuccess && storagePermissionRequest.Result;
 
             if (isPermissionsGranted)
             {

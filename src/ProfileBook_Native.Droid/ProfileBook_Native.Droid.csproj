@@ -80,6 +80,9 @@
     <Compile Include="Views\MainList\ProfileListViewItem.cs" />
     <Compile Include="Views\MainList\ProfileListViewAdapter.cs" />
     <Compile Include="Views\MainList\ProfileListView.cs" />
+    <Compile Include="Views\AddEditProfile\AddEditProfileView.cs" />
+    <Compile Include="Converters\BytesToDrawableConverter.cs" />
+    <Compile Include="Views\Settings\SettingsView.cs" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.Extensions.Logging.Abstractions">
@@ -294,6 +297,22 @@
       <SubType></SubType>
       <Generator></Generator>
     </AndroidResource>
+    <AndroidResource Include="Resources\drawable\roundcorner.xml">
+      <SubType></SubType>
+      <Generator></Generator>
+    </AndroidResource>
+    <AndroidResource Include="Resources\layout\AddEditProfileView.xml">
+      <SubType></SubType>
+      <Generator></Generator>
+    </AndroidResource>
+    <AndroidResource Include="Resources\xml\file_paths.xml">
+      <SubType></SubType>
+      <Generator></Generator>
+    </AndroidResource>
+    <AndroidResource Include="Resources\layout\SettingsView.xml">
+      <SubType></SubType>
+      <Generator></Generator>
+    </AndroidResource>
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\values\strings.xml" />
@@ -335,6 +354,10 @@
     <Folder Include="Resources\anim\" />
     <Folder Include="Views\MainList\" />
     <Folder Include="Resources\menu\" />
+    <Folder Include="Views\AddEditProfile\" />
+    <Folder Include="Views\Settings\" />
+    <Folder Include="Converters\" />
+    <Folder Include="Resources\xml\" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.

@@ -22,7 +22,7 @@ namespace ProfileBook_Native.Core.Services.Photo
 
                 if (_media.IsPickPhotoSupported)
                 {
-                    result = await _media.PickPhotoAsync();
+                    result = await _media.PickPhotoAsync(new() { CompressionQuality = 30 });
                 }
 
                 if (result == null)
@@ -40,10 +40,7 @@ namespace ProfileBook_Native.Core.Services.Photo
 
                 if (_media.IsTakePhotoSupported)
                 {
-                    result = await _media.TakePhotoAsync(new StoreCameraMediaOptions
-                    {
-                        SaveToAlbum = true,
-                    });
+                    result = await _media.TakePhotoAsync(new() { CompressionQuality = 30 });
                 }
 
                 if (result == null)

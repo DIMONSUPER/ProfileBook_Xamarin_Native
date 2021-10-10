@@ -1,5 +1,6 @@
 using Acr.UserDialogs;
 using Android.App;
+using Android.OS;
 using MvvmCross.Platforms.Android.Views;
 
 namespace ProfileBook_Native.Droid.Views.Splash
@@ -8,17 +9,15 @@ namespace ProfileBook_Native.Droid.Views.Splash
         NoHistory = true,
         MainLauncher = true,
         Label = "@string/app_name",
-        Theme = "@style/AppTheme.Splash",
-        Icon = "@mipmap/ic_launcher",
-        RoundIcon = "@mipmap/ic_launcher_round")]
+        Theme = "@style/AppTheme.Splash")]
     public class SplashActivity : MvxSplashScreenActivity
     {
         #region -- Overrides --
 
-        protected override void OnStart()
+        protected override void OnCreate(Bundle bundle)
         {
-            base.OnStart();
-
+            base.OnCreate(bundle);
+            Xamarin.Essentials.Platform.Init(this, bundle);
             UserDialogs.Init(this);
         }
 

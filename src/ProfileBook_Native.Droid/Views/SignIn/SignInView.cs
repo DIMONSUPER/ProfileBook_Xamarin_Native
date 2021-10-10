@@ -27,6 +27,8 @@ namespace ProfileBook_Native.Droid.Views.SignIn
             base.OnStart();
 
             OverridePendingTransition(Resource.Animation.slide_in_left, Resource.Animation.slide_out_right);
+
+            SetLocalazableStrings();
         }
 
         protected override void OnCreate(Bundle bundle)
@@ -38,8 +40,6 @@ namespace ProfileBook_Native.Droid.Views.SignIn
             _passwordEditText = FindViewById<EditText>(Resource.Id.password_edit_text);
             _loginEditText = FindViewById<EditText>(Resource.Id.login_edit_text);
             _rememberMeTextView = FindViewById<TextView>(Resource.Id.remember_me_text_view);
-
-            SetLocalazableStrings();
         }
 
         public override void OnBackPressed()

@@ -1,8 +1,10 @@
 using System.ComponentModel;
 using System.Linq;
+using System.Threading.Tasks;
 using Acr.UserDialogs;
 using MvvmCross.Commands;
 using MvvmCross.Navigation;
+using MvvmCross.ViewModels;
 using ProfileBook_Native.Core.Enums;
 using ProfileBook_Native.Core.Models;
 using ProfileBook_Native.Core.Resources.Strings;

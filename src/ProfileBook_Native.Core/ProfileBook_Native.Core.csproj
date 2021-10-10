@@ -55,6 +55,7 @@
     <None Remove="System.Drawing.Common" />
     <None Remove="Aspose.Imaging" />
     <None Remove="Services\Theme\" />
+    <None Remove="Converters\" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="ViewModels\SignIn\" />
@@ -76,6 +77,7 @@
     <Folder Include="Services\Permission\" />
     <Folder Include="Enums\" />
     <Folder Include="Services\Theme\" />
+    <Folder Include="Converters\" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Update="Resources\Strings\Strings.resx">

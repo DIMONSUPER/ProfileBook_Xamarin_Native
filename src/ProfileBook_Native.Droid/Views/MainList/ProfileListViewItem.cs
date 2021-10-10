@@ -6,6 +6,7 @@ using Android.Widget;
 using MvvmCross.Binding.BindingContext;
 using MvvmCross.Platforms.Android.Binding.Views;
 using ProfileBook_Native.Core.Models;
+using ProfileBook_Native.Droid.Converters;
 
 namespace ProfileBook_Native.Droid.Views.MainList
 {
@@ -28,7 +29,8 @@ namespace ProfileBook_Native.Droid.Views.MainList
             _profileNicknameTextView = Content.FindViewById<TextView>(Resource.Id.profile_nickname_text_view);
 
             var set = this.CreateBindingSet<ProfileListViewItem, ProfileBindableModel>();
-            set.Bind(ProfileImage).To(vm => vm.ProfileImage);
+            set.Bind(_profileImageView).For("Drawable").To(vm => vm.ProfileImage).WithConversion(new BytesToDrawableConverter(), context);
+            //set.Bind(ProfileImage).To(vm => vm.ProfileImage);
             set.Bind(_profileNameTextView).To(vm => vm.Name);
             set.Bind(_profileNicknameTextView).To(vm => vm.NickName);
             set.Apply();

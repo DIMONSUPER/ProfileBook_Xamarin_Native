@@ -11,28 +11,20 @@ namespace ProfileBook_Native.Droid.Views.MainList
     [Activity]
     public class MainListView : BaseActivity<MainListViewModel>
     {
+        private TextView _noProfilesTextView;
+
         #region -- Overrides --
 
         protected override int ActivityLayoutId => Resource.Layout.MainListView;
 
-        protected override void OnStart()
-        {
-            base.OnStart();
-
-        }
-
         public override bool OnOptionsItemSelected(IMenuItem item)
         {
-            var result = base.OnOptionsItemSelected(item);
-
             if (item.ItemId == Resource.Id.settings)
             {
                 if (ViewModel.SettingsButtonTappedCommand is not null && ViewModel.SettingsButtonTappedCommand.CanExecute(null))
                 {
                     ViewModel.SettingsButtonTappedCommand.Execute(null);
                 }
-
-                result = true;
             }
             else if (item.ItemId == Resource.Id.log_out)
             {
@@ -40,11 +32,9 @@ namespace ProfileBook_Native.Droid.Views.MainList
                 {
                     ViewModel.LogOutButtonTappedCommand.Execute(null);
                 }
-
-                result = true;
             }
 
-            return result;
+            return base.OnOptionsItemSelected(item);
         }
 
         public override bool OnCreateOptionsMenu(IMenu menu)
@@ -63,6 +53,15 @@ namespace ProfileBook_Native.Droid.Views.MainList
         protected override void OnCreate(Bundle bundle)
         {
             base.OnCreate(bundle);
+
+            _noProfilesTextView = FindViewById<TextView>(Resource.Id.no_profiles_text_view);
+        }
+
+        protected override void OnStart()
+        {
+            base.OnStart();
+
+            SetLocalazableStrings();
         }
 
         public override void OnBackPressed()
@@ -76,6 +75,8 @@ namespace ProfileBook_Native.Droid.Views.MainList
 
         private void SetLocalazableStrings()
         {
+            SupportActionBar.Title = Strings.MainList;
+            _noProfilesTextView.Text = Strings.NoProfiles;
         }
 
         #endregion

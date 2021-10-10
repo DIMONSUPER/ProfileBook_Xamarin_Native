@@ -41,13 +41,9 @@ namespace ProfileBook_Native.Droid.Views.SignUp
 
         public override bool OnOptionsItemSelected(IMenuItem item)
         {
-            switch (item.ItemId)
+            if (item.ItemId == Android.Resource.Id.Home)
             {
-                case Android.Resource.Id.Home:
-                    OnBackPressed();
-                    break;
-                default:
-                    break;
+                OnBackPressed();
             }
 
             return base.OnOptionsItemSelected(item);
