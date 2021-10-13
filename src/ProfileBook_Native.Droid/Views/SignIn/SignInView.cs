@@ -26,8 +26,6 @@ namespace ProfileBook_Native.Droid.Views.SignIn
         {
             base.OnStart();
 
-            OverridePendingTransition(Resource.Animation.slide_in_left, Resource.Animation.slide_out_right);
-
             SetLocalazableStrings();
         }
 

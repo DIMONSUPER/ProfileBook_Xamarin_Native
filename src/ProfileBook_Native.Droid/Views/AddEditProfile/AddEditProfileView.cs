@@ -42,13 +42,6 @@ namespace ProfileBook_Native.Droid.Views.AddEditProfile
 
         protected override int ActivityLayoutId => Resource.Layout.AddEditProfileView;
 
-        public override void Finish()
-        {
-            base.Finish();
-
-            OverridePendingTransition(Resource.Animation.slide_in_left, Resource.Animation.slide_out_right);
-        }
-
         public override bool OnOptionsItemSelected(IMenuItem item)
         {
             if (item.ItemId == Android.Resource.Id.Home)
@@ -80,7 +73,6 @@ namespace ProfileBook_Native.Droid.Views.AddEditProfile
         protected override void OnCreate(Bundle bundle)
         {
             base.OnCreate(bundle);
-            OverridePendingTransition(Resource.Animation.slide_in_right, Resource.Animation.slide_out_left);
             SupportActionBar.SetDisplayHomeAsUpEnabled(true);
 
             _profileImageButton = FindViewById<ImageButton>(Resource.Id.prfile_image_button);

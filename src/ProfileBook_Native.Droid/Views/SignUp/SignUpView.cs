@@ -19,13 +19,6 @@ namespace ProfileBook_Native.Droid.Views.SignUp
 
         protected override int ActivityLayoutId => Resource.Layout.SignUpView;
 
-        protected override void OnStart()
-        {
-            base.OnStart();
-
-            OverridePendingTransition(Resource.Animation.slide_in_right, Resource.Animation.slide_out_left);
-        }
-
         protected override void OnCreate(Bundle bundle)
         {
             base.OnCreate(bundle);

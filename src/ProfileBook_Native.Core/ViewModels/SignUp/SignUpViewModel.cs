@@ -84,11 +84,11 @@ namespace ProfileBook_Native.Core.ViewModels.SignUp
             {
                 var loginMsg = GetValidationLoginMessage();
 
-                if (string.IsNullOrEmpty(loginMsg))
+                if (string.IsNullOrWhiteSpace(loginMsg))
                 {
                     var passwordMsg = GetValidationPasswordMessage();
 
-                    if (string.IsNullOrEmpty(passwordMsg))
+                    if (string.IsNullOrWhiteSpace(passwordMsg))
                     {
                         var newUser = new UserModel { Login = Login, Password = Password };
                         await _userService.SaveUserAsync(newUser);

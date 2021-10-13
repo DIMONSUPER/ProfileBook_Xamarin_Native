@@ -25,6 +25,13 @@ namespace ProfileBook_Native.Droid.Views
             SetContentView(ActivityLayoutId);
         }
 
+        protected override void OnStart()
+        {
+            base.OnStart();
+
+            OverridePendingTransition(0, 0);
+        }
+
         public override void OnRequestPermissionsResult(int requestCode, string[] permissions, [GeneratedEnum] Android.Content.PM.Permission[] grantResults)
         {
             Xamarin.Essentials.Platform.OnRequestPermissionsResult(requestCode, permissions, grantResults);

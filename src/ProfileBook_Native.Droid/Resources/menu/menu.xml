@@ -3,4 +3,5 @@
 	<item android:id="@+id/settings" />
 	<item android:id="@+id/log_out" />
 	<item android:id="@+id/save" />
+	<item android:id="@+id/delete" />
 </menu>

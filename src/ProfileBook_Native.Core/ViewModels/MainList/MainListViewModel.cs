@@ -74,9 +74,6 @@ namespace ProfileBook_Native.Core.ViewModels.MainList
         private ICommand _profileTappedCommand;
         public ICommand ProfileTappedCommand => _profileTappedCommand ??= new MvxCommand<ProfileBindableModel>(OnProfileTappedCommandAsync);
 
-        private ICommand _profileAvatarTappedCommand;
-        public ICommand ProfileAvatarTappedCommand => _profileAvatarTappedCommand ??= new MvxCommand<ProfileBindableModel>(OnProfileAvatarTappedCommandAsync);
-
         private ICommand _addButtonTappedCommand;
         public ICommand AddButtonTappedCommand => _addButtonTappedCommand ??= new MvxCommand(OnAddButtonTappedCommandAsync);
 
@@ -113,10 +110,6 @@ namespace ProfileBook_Native.Core.ViewModels.MainList
         #endregion
 
         #region -- Private helpers --
-
-        private void OnProfileAvatarTappedCommandAsync(ProfileBindableModel profile)
-        {
-        }
 
         private async void OnAddButtonTappedCommandAsync()
         {
@@ -161,6 +154,7 @@ namespace ProfileBook_Native.Core.ViewModels.MainList
                 Profiles.Remove(profile);
                 var profileModel = await _mapperService.MapAsync<ProfileModel>(profile);
                 await _profileService.DeleteProfileAsync(profileModel);
+                HasProfiles = Profiles != null && Profiles.Any();
             }
         }
 
@@ -183,7 +177,6 @@ namespace ProfileBook_Native.Core.ViewModels.MainList
                 var profileBindableModels = await _mapperService.MapRangeAsync<ProfileModel, ProfileBindableModel>(profilesRequest.Result, (m, vm) =>
                 {
                     vm.TapCommad = ProfileTappedCommand;
-                    vm.AvatarTappedCommad = ProfileAvatarTappedCommand;
                     vm.DeleteCommand = DeleteButtonTappedCommand;
                 });
 

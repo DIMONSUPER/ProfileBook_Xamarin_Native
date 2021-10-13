@@ -64,13 +64,6 @@ namespace ProfileBook_Native.Core.Models
             set => SetProperty(ref _tapCommad, value);
         }
 
-        private ICommand _avatarTappedCommad;
-        public ICommand AvatarTappedCommad
-        {
-            get => _avatarTappedCommad;
-            set => SetProperty(ref _avatarTappedCommad, value);
-        }
-
         private ICommand _deleteCommad;
         public ICommand DeleteCommand
         {

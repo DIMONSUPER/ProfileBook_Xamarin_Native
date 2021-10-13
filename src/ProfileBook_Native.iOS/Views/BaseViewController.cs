@@ -18,10 +18,10 @@ namespace ProfileBook_Native.iOS.Views
 
             View.BackgroundColor = UIColor.White;
 
-            NavigationController.NavigationBar.BarStyle = UIBarStyle.Black;
+            NavigationController.NavigationBar.BarStyle = UIBarStyle.Default;
             NavigationController.NavigationBar.Translucent = false;
             NavigationController.NavigationBar.Hidden = false;
-            NavigationController.NavigationBar.BarTintColor = ColorPalette.Primary;
+            NavigationController.NavigationBar.BarTintColor = UIColor.Black;
             NavigationController.NavigationBar.TintColor = UIColor.White;
             NavigationController.NavigationBar.TitleTextAttributes = new() { ForegroundColor = UIColor.White };
 

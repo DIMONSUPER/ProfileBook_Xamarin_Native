@@ -58,7 +58,7 @@ namespace ProfileBook_Native.Core
         {
             InitLanguage();
 
-            if (_userService.IsAuthCompleted)
+            if (_userService.IsAuthCompleted && _userService.IsRememberMe)
             {
                 NavigationService.Navigate<MainListViewModel>().GetAwaiter().GetResult();
             }

@@ -3,14 +3,18 @@ using Android.App;
 using Android.OS;
 using Android.Views;
 using Android.Widget;
+using MvvmCross.Binding.Extensions;
+using ProfileBook_Native.Core.Models;
 using ProfileBook_Native.Core.Resources.Strings;
 using ProfileBook_Native.Core.ViewModels.MainList;
+using static Android.Widget.AdapterView;
 
 namespace ProfileBook_Native.Droid.Views.MainList
 {
     [Activity]
     public class MainListView : BaseActivity<MainListViewModel>
     {
+        private ProfileListView _profileListView;
         private TextView _noProfilesTextView;
 
         #region -- Overrides --
@@ -50,11 +54,41 @@ namespace ProfileBook_Native.Droid.Views.MainList
             return base.OnCreateOptionsMenu(menu);
         }
 
+        public override bool OnContextItemSelected(IMenuItem item)
+        {
+            if (item.ItemId == Resource.Id.delete)
+            {
+                var acmi = item.MenuInfo as AdapterContextMenuInfo;
+
+                var selectedProfile = _profileListView.ItemsSource.ElementAt(acmi.Position);
+
+                if (ViewModel.DeleteButtonTappedCommand is not null && ViewModel.DeleteButtonTappedCommand.CanExecute(selectedProfile))
+                {
+                    ViewModel.DeleteButtonTappedCommand.Execute(selectedProfile);
+                }
+            }
+
+            return base.OnContextItemSelected(item);
+        }
+
+        public override void OnCreateContextMenu(IContextMenu menu, View v, IContextMenuContextMenuInfo menuInfo)
+        {
+            base.OnCreateContextMenu(menu, v, menuInfo);
+
+            if (v.Id == Resource.Id.profile_list_view)
+            {
+                menu.Add(Menu.None, Resource.Id.delete, 1, Strings.Delete);
+            }
+        }
+
         protected override void OnCreate(Bundle bundle)
         {
             base.OnCreate(bundle);
 
+            _profileListView = FindViewById<ProfileListView>(Resource.Id.profile_list_view);
             _noProfilesTextView = FindViewById<TextView>(Resource.Id.no_profiles_text_view);
+
+            RegisterForContextMenu(_profileListView);
         }
 
         protected override void OnStart()

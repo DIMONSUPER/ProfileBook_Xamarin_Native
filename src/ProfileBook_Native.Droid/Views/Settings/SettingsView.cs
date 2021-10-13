@@ -86,7 +86,6 @@ namespace ProfileBook_Native.Droid.Views.Settings
         public override void Finish()
         {
             base.Finish();
-            OverridePendingTransition(Resource.Animation.slide_in_left, Resource.Animation.slide_out_right);
             _sortRadioGroup.CheckedChange -= OnSortRadioGroupCheckedChange;
             _darkThemeCheckBox.CheckedChange -= OnDarkThemeCheckedChange;
             _languagesNumberPicker.ValueChanged -= OnLanguageChanged;
@@ -105,7 +104,6 @@ namespace ProfileBook_Native.Droid.Views.Settings
         protected override void OnCreate(Bundle bundle)
         {
             base.OnCreate(bundle);
-            OverridePendingTransition(Resource.Animation.slide_in_right, Resource.Animation.slide_out_left);
             SupportActionBar.SetDisplayHomeAsUpEnabled(true);
 
             _sortByTextView = FindViewById<TextView>(Resource.Id.sort_by_text_view);
